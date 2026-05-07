@@ -409,7 +409,7 @@ html.dark .btn-void{border-color:#4a3558;}
   <div id="sync-bar">
     <div id="sync-dot" class="offline"></div>
     <div id="sync-text">Sheets not configured</div>
-    <button id="sync-btn" onclick="manualSync()">Sync</button>
+    <button id="sync-btn" onclick="manualSync()">Refresh</button>
   </div>
 
   <!-- TABS -->
@@ -707,6 +707,7 @@ const isDark=()=>document.documentElement.classList.contains('dark');
 
 // ── data ──────────────────────────────────────────────────────────────────────
 let DB={drinks:[],voids:[]};
+// Load from localStorage as offline cache
 try{const s=localStorage.getItem(STORAGE_KEY);if(s)DB=JSON.parse(s);}catch{}
 let syncQueue=[];
 try{const q=localStorage.getItem(QUEUE_KEY);if(q)syncQueue=JSON.parse(q);}catch{}
@@ -714,7 +715,46 @@ let scriptUrl=localStorage.getItem(URL_KEY)||'';
 const save=()=>{try{localStorage.setItem(STORAGE_KEY,JSON.stringify(DB));}catch{}};
 const saveQueue=()=>{try{localStorage.setItem(QUEUE_KEY,JSON.stringify(syncQueue));}catch{}};
 
-let selDrinkType=0,selDrinkAmt=8,editingItem=null,modalSelType=0,modalSelAmt=8,isSyncing=false;
+const TYPE_MAP={'Water':0,'Sparkling Water':1,'Coffee':2,'Tea':3,'Juice':4,'Soda':5,'Alcohol':6,'Other':7};
+
+let selDrinkType=0,selDrinkAmt=8,editingItem=null,modalSelType=0,modalSelAmt=8,isSyncing=false,isLoading=false;
+
+// ── load from sheets ──────────────────────────────────────────────────────────
+async function loadFromSheets(){
+  if(!scriptUrl||!navigator.onLine)return;
+  isLoading=true;
+  setSyncStatus('syncing','Loading from Sheets…');
+  try{
+    const res=await fetch(scriptUrl+'?payload='+encodeURIComponent(JSON.stringify({action:'load'})));
+    const data=await res.json();
+    if(!data.ok)throw new Error(data.msg||'Load failed');
+    DB.drinks=data.drinks.map((r,i)=>({
+      id:Number(r.id)||Date.now()+i,
+      time:new Date(r.time_iso).getTime(),
+      type:TYPE_MAP[r.drink_type]??0,
+      amount:Number(r.amount),
+      notes:r.notes||''
+    }));
+    DB.voids=data.voids.map((r,i)=>({
+      id:Number(r.id)||Date.now()+i,
+      time:new Date(r.time_iso).getTime(),
+      notes:r.notes||''
+    }));
+    save(); // update local cache
+    renderHeader();renderHistory();
+    // re-render whichever tab is active
+    const activeTab=document.querySelector('.tab-panel.active')?.id?.replace('tab-','');
+    if(activeTab==='timeline')renderTimeline();
+    else if(activeTab==='charts')renderCharts();
+    else if(activeTab==='stats')renderStats();
+    setSyncStatus('online','Loaded from Sheets ✓');
+  }catch(e){
+    console.warn('Load from Sheets failed:',e);
+    setSyncStatus(navigator.onLine?'error':'offline',
+      navigator.onLine?'Could not load from Sheets — showing cached data':'Offline — showing cached data');
+  }
+  isLoading=false;
+}
 
 // ── dark mode ─────────────────────────────────────────────────────────────────
 function toggleDark(){
@@ -735,9 +775,13 @@ function updateSyncBar(){
   const p=syncQueue.length;
   if(!scriptUrl){setSyncStatus('offline','Sheets not configured — tap ⚙ to set up');return;}
   if(!navigator.onLine){setSyncStatus('offline',`Offline · ${p} pending`);return;}
-  if(isSyncing){setSyncStatus('syncing','Syncing…');return;}
+  if(isSyncing||isLoading)return; // status already set by load/flush
   setSyncStatus(p===0?'online':'offline',p===0?'Synced ✓':`${p} item${p>1?'s':''} pending sync`);
 }
+// add error dot style
+const _style=document.createElement('style');
+_style.textContent='#sync-dot.error{background:var(--red);}';
+document.head.appendChild(_style);
 function enqueue(op){syncQueue.push(op);saveQueue();updateSyncBar();flushQueue();}
 async function gasGet(op){
   const url=scriptUrl+'?payload='+encodeURIComponent(JSON.stringify(op));
@@ -934,7 +978,7 @@ async function testAndSaveUrl(){
     updateSyncBar();flushQueue();setTimeout(closeSetup,1800);
   }catch(err){status.textContent='Could not reach URL — check it and try again.';status.style.color='var(--red)';}
 }
-function manualSync(){if(!scriptUrl){openSetup();return;}flushQueue();}
+function manualSync(){if(!scriptUrl){openSetup();return;}flushQueue().then(()=>loadFromSheets());}
 
 // ── time helpers ──────────────────────────────────────────────────────────────
 function fmtLocalISO(isoStr){
@@ -1322,7 +1366,9 @@ function dl(text,mime,filename){const a=document.createElement('a');a.href=URL.c
   document.getElementById('void-time').value=now;
   updateTimeDisplay('drink-time');updateTimeDisplay('void-time');
   renderHeader();renderHistory();updateSyncBar();
-  window.addEventListener('online',()=>{updateSyncBar();flushQueue();});
+  // Load fresh data from Sheets on every startup
+  loadFromSheets();
+  window.addEventListener('online',()=>{updateSyncBar();flushQueue();loadFromSheets();});
   window.addEventListener('offline',()=>updateSyncBar());
   if(syncQueue.length>0&&navigator.onLine&&scriptUrl)flushQueue();
 })();
