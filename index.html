@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -13,65 +14,65 @@
 
 /* ── LIGHT THEME (default) ── */
 :root{
-  --bg:#f2f0eb;
-  --bg2:#ece9e3;
-  --panel:#ffffff;
-  --panel2:#f7f5f0;
-  --border:#ddd9d0;
-  --borderhi:#c8c2b5;
-  --water:#2d8a7a;
-  --water-dim:#e8f4f1;
-  --water-chip:#d0ede8;
-  --void:#7a5c8a;
-  --void-dim:#f0eaf4;
-  --void-chip:#e2d5ea;
-  --green:#2e7a52;
-  --green-dim:#e6f2ec;
-  --amber:#9a6830;
-  --amber-dim:#f5edd8;
-  --red:#8a3a3a;
-  --red-dim:#f5e8e8;
-  --muted:#888078;
-  --text:#1a1814;
-  --textdim:#6a6358;
-  --shadow:0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
-  --serif:'Instrument Serif',Georgia,serif;
-  --sans:'DM Sans','Helvetica Neue',sans-serif;
+–bg:#f2f0eb;
+–bg2:#ece9e3;
+–panel:#ffffff;
+–panel2:#f7f5f0;
+–border:#ddd9d0;
+–borderhi:#c8c2b5;
+–water:#2d8a7a;
+–water-dim:#e8f4f1;
+–water-chip:#d0ede8;
+–void:#7a5c8a;
+–void-dim:#f0eaf4;
+–void-chip:#e2d5ea;
+–green:#2e7a52;
+–green-dim:#e6f2ec;
+–amber:#9a6830;
+–amber-dim:#f5edd8;
+–red:#8a3a3a;
+–red-dim:#f5e8e8;
+–muted:#888078;
+–text:#1a1814;
+–textdim:#6a6358;
+–shadow:0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
+–serif:‘Instrument Serif’,Georgia,serif;
+–sans:‘DM Sans’,‘Helvetica Neue’,sans-serif;
 }
 
 /* ── DARK THEME ── */
 html.dark{
-  --bg:#161b18;
-  --bg2:#1c2220;
-  --panel:#222a27;
-  --panel2:#1e2522;
-  --border:#2d3630;
-  --borderhi:#374039;
-  --water:#5aa898;
-  --water-dim:#1e3d38;
-  --water-chip:#1e3d38;
-  --void:#9b7fa6;
-  --void-dim:#2a1f30;
-  --void-chip:#2a1f30;
-  --green:#5a9e78;
-  --green-dim:#1a3328;
-  --amber:#b8895a;
-  --amber-dim:#3d2e1e;
-  --red:#a05a5a;
-  --red-dim:#3a1a1a;
-  --muted:#5a6860;
-  --text:#dde5e0;
-  --textdim:#8a9e95;
-  --shadow:none;
+–bg:#161b18;
+–bg2:#1c2220;
+–panel:#222a27;
+–panel2:#1e2522;
+–border:#2d3630;
+–borderhi:#374039;
+–water:#5aa898;
+–water-dim:#1e3d38;
+–water-chip:#1e3d38;
+–void:#9b7fa6;
+–void-dim:#2a1f30;
+–void-chip:#2a1f30;
+–green:#5a9e78;
+–green-dim:#1a3328;
+–amber:#b8895a;
+–amber-dim:#3d2e1e;
+–red:#a05a5a;
+–red-dim:#3a1a1a;
+–muted:#5a6860;
+–text:#dde5e0;
+–textdim:#8a9e95;
+–shadow:none;
 }
 
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-text-size-adjust:100%;font-size:14px;transition:background .2s,color .2s;}
+html,body{height:100%;background:var(–bg);color:var(–text);font-family:var(–sans);-webkit-text-size-adjust:100%;font-size:14px;transition:background .2s,color .2s;}
 body{padding-bottom:env(safe-area-inset-bottom);}
-input,textarea,button{font-family:var(--sans);}
+input,textarea,button{font-family:var(–sans);}
 input[type=number]::-webkit-inner-spin-button{opacity:0;}
 textarea{resize:vertical;}
 ::-webkit-scrollbar{width:3px;}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+::-webkit-scrollbar-thumb{background:var(–border);border-radius:3px;}
 
 @keyframes pop{from{opacity:0;transform:translateX(-50%) scale(.94);}to{opacity:1;transform:translateX(-50%) scale(1);}}
 @keyframes slideup{from{transform:translateY(100%);}to{transform:translateY(0);}}
@@ -82,20 +83,20 @@ textarea{resize:vertical;}
 #app{min-height:100vh;display:flex;flex-direction:column;}
 
 #header{
-  background:var(--panel);border-bottom:1px solid var(--border);
-  padding:18px 16px 14px;
-  padding-top:calc(18px + env(safe-area-inset-top));
-  box-shadow:var(--shadow);
+background:var(–panel);border-bottom:1px solid var(–border);
+padding:18px 16px 14px;
+padding-top:calc(18px + env(safe-area-inset-top));
+box-shadow:var(–shadow);
 }
 
-#tabs{display:flex;border-bottom:1px solid var(--border);background:var(--panel);flex-shrink:0;}
+#tabs{display:flex;border-bottom:1px solid var(–border);background:var(–panel);flex-shrink:0;}
 .tab-btn{
-  flex:1;padding:12px 0;background:none;border:none;color:var(--muted);
-  border-bottom:2px solid transparent;cursor:pointer;font-size:11px;font-weight:600;
-  letter-spacing:.6px;text-transform:uppercase;font-family:var(--sans);
-  transition:color .15s,border-color .15s;
+flex:1;padding:12px 0;background:none;border:none;color:var(–muted);
+border-bottom:2px solid transparent;cursor:pointer;font-size:11px;font-weight:600;
+letter-spacing:.6px;text-transform:uppercase;font-family:var(–sans);
+transition:color .15s,border-color .15s;
 }
-.tab-btn.active{color:var(--water);border-bottom-color:var(--water);}
+.tab-btn.active{color:var(–water);border-bottom-color:var(–water);}
 
 #content{flex:1;padding:14px 12px;overflow-y:auto;padding-bottom:48px;}
 .tab-panel{display:none;flex-direction:column;gap:12px;}
@@ -103,38 +104,38 @@ textarea{resize:vertical;}
 
 /* ── PANELS ── */
 .panel{
-  background:var(--panel);border-radius:14px;padding:16px;
-  border:1px solid var(--border);box-shadow:var(--shadow);
+background:var(–panel);border-radius:14px;padding:16px;
+border:1px solid var(–border);box-shadow:var(–shadow);
 }
-.panel.alt{background:var(--panel2);}
+.panel.alt{background:var(–panel2);}
 .section-head{
-  font-family:var(--serif);font-size:17px;font-weight:400;
-  margin-bottom:14px;color:var(--text);letter-spacing:-.2px;
+font-family:var(–serif);font-size:17px;font-weight:400;
+margin-bottom:14px;color:var(–text);letter-spacing:-.2px;
 }
 .label{
-  font-size:10px;font-weight:700;letter-spacing:.9px;
-  color:var(--muted);margin-bottom:7px;text-transform:uppercase;
+font-size:10px;font-weight:700;letter-spacing:.9px;
+color:var(–muted);margin-bottom:7px;text-transform:uppercase;
 }
 
 /* ── QUICK LOG BUTTONS ── */
 .quick-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:4px;}
 .quick-btn{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:4px;padding:12px 6px;border-radius:12px;border:1.5px solid var(--border);
-  background:var(--panel2);cursor:pointer;font-family:var(--sans);
-  transition:all .15s;box-shadow:var(--shadow);
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+gap:4px;padding:12px 6px;border-radius:12px;border:1.5px solid var(–border);
+background:var(–panel2);cursor:pointer;font-family:var(–sans);
+transition:all .15s;box-shadow:var(–shadow);
 }
 .quick-btn:active{animation:quickpop .2s ease;opacity:.8;}
 .quick-emoji{font-size:20px;line-height:1;}
-.quick-label{font-size:11px;font-weight:700;color:var(--text);}
-.quick-sub{font-size:9px;font-weight:500;color:var(--muted);}
+.quick-label{font-size:11px;font-weight:700;color:var(–text);}
+.quick-sub{font-size:9px;font-weight:500;color:var(–muted);}
 
-.quick-btn.water{border-color:var(--water-chip);background:var(--water-dim);}
-.quick-btn.water .quick-label{color:var(--water);}
-.quick-btn.spark{border-color:var(--water-chip);background:var(--water-dim);}
-.quick-btn.spark .quick-label{color:var(--water);}
-.quick-btn.coffee{border-color:var(--amber-dim);background:var(--amber-dim);}
-.quick-btn.coffee .quick-label{color:var(--amber);}
+.quick-btn.water{border-color:var(–water-chip);background:var(–water-dim);}
+.quick-btn.water .quick-label{color:var(–water);}
+.quick-btn.spark{border-color:var(–water-chip);background:var(–water-dim);}
+.quick-btn.spark .quick-label{color:var(–water);}
+.quick-btn.coffee{border-color:var(–amber-dim);background:var(–amber-dim);}
+.quick-btn.coffee .quick-label{color:var(–amber);}
 
 html.dark .quick-btn.water{border-color:#2a5048;}
 html.dark .quick-btn.spark{border-color:#2a5048;}
@@ -143,21 +144,21 @@ html.dark .quick-btn.coffee{border-color:#5a3a1a;}
 /* ── CHIPS ── */
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
 .chip{
-  padding:6px 13px;border-radius:8px;border:1.5px solid var(--border);
-  cursor:pointer;background:transparent;color:var(--textdim);
-  font-size:12px;font-weight:600;font-family:var(--sans);transition:all .15s;
+padding:6px 13px;border-radius:8px;border:1.5px solid var(–border);
+cursor:pointer;background:transparent;color:var(–textdim);
+font-size:12px;font-weight:600;font-family:var(–sans);transition:all .15s;
 }
-.chip:hover{border-color:var(--borderhi);color:var(--text);}
+.chip:hover{border-color:var(–borderhi);color:var(–text);}
 .chip.active{border-color:transparent;}
 
 /* ── INPUTS ── */
 .inp{
-  padding:9px 12px;border-radius:9px;background:var(--bg);border:1.5px solid var(--border);
-  color:var(--text);font-size:13px;font-weight:500;outline:none;width:100%;
-  transition:border-color .15s;
+padding:9px 12px;border-radius:9px;background:var(–bg);border:1.5px solid var(–border);
+color:var(–text);font-size:13px;font-weight:500;outline:none;width:100%;
+transition:border-color .15s;
 }
-.inp:focus{border-color:var(--borderhi);}
-.inp::placeholder{color:var(--muted);}
+.inp:focus{border-color:var(–borderhi);}
+.inp::placeholder{color:var(–muted);}
 .inp-sm{width:72px;}
 .mb10{margin-bottom:10px;}
 .mb12{margin-bottom:12px;}
@@ -165,206 +166,215 @@ html.dark .quick-btn.coffee{border-color:#5a3a1a;}
 
 /* ── TIME ROW ── */
 .time-row{
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--bg);border:1.5px solid var(--border);border-radius:9px;
-  padding:8px 12px;margin-bottom:12px;cursor:pointer;
+display:flex;align-items:center;justify-content:space-between;
+background:var(–bg);border:1.5px solid var(–border);border-radius:9px;
+padding:8px 12px;margin-bottom:12px;cursor:pointer;
 }
-.time-row-val{font-size:13px;font-weight:500;color:var(--textdim);}
+.time-row-val{font-size:13px;font-weight:500;color:var(–textdim);}
 .time-row-btn{
-  background:var(--panel);border:1.5px solid var(--border);border-radius:6px;
-  padding:4px 10px;font-size:11px;font-weight:700;color:var(--muted);
-  cursor:pointer;font-family:var(--sans);white-space:nowrap;
-  transition:color .15s,border-color .15s;
+background:var(–panel);border:1.5px solid var(–border);border-radius:6px;
+padding:4px 10px;font-size:11px;font-weight:700;color:var(–muted);
+cursor:pointer;font-family:var(–sans);white-space:nowrap;
+transition:color .15s,border-color .15s;
 }
-.time-row-btn:hover{color:var(--text);border-color:var(--borderhi);}
-.time-inp-hidden{position:absolute;opacity:0;pointer-events:none;width:0;height:0;}
+.time-row-btn:hover{color:var(–text);border-color:var(–borderhi);}
+.time-row{position:relative;}
+.time-inp-hidden{
+position:absolute;inset:0;opacity:0;
+width:100%;height:100%;
+cursor:pointer;z-index:5;
+/* show native picker on tap — must be visible to iOS */
+font-size:16px;
+}
 
 /* ── LOG BUTTONS ── */
 .btn-log{
-  width:100%;padding:14px;border-radius:11px;border:none;
-  font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);
-  transition:opacity .15s,transform .1s;letter-spacing:.1px;
+width:100%;padding:14px;border-radius:11px;border:none;
+font-size:14px;font-weight:700;cursor:pointer;font-family:var(–sans);
+transition:opacity .15s,transform .1s;letter-spacing:.1px;
 }
 .btn-log:active{transform:scale(.98);opacity:.85;}
 
 /* ── VOID BUTTON ── */
 .btn-void{
-  width:100%;padding:14px;border-radius:11px;border:none;
-  font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);
-  background:var(--void-dim);color:var(--void);
-  border:1.5px solid var(--void-chip);
-  transition:opacity .15s,transform .1s;
+width:100%;padding:14px;border-radius:11px;border:none;
+font-size:14px;font-weight:700;cursor:pointer;font-family:var(–sans);
+background:var(–void-dim);color:var(–void);
+border:1.5px solid var(–void-chip);
+transition:opacity .15s,transform .1s;
 }
 html.dark .btn-void{border-color:#4a3558;}
 .btn-void:active{transform:scale(.98);opacity:.85;}
 
 /* ── HEADER ── */
 .hdr-row{display:flex;justify-content:space-between;align-items:flex-start;}
-.hdr-title{font-family:var(--serif);font-size:26px;font-weight:400;color:var(--text);letter-spacing:-.3px;}
+.hdr-title{font-family:var(–serif);font-size:26px;font-weight:400;color:var(–text);letter-spacing:-.3px;}
 .hdr-controls{display:flex;gap:6px;align-items:center;margin-top:3px;}
 .hdr-btn{
-  background:var(--panel2);border:1.5px solid var(--border);border-radius:8px;
-  padding:6px 10px;color:var(--textdim);cursor:pointer;font-size:10px;font-weight:700;
-  font-family:var(--sans);transition:border-color .15s,color .15s;
+background:var(–panel2);border:1.5px solid var(–border);border-radius:8px;
+padding:6px 10px;color:var(–textdim);cursor:pointer;font-size:10px;font-weight:700;
+font-family:var(–sans);transition:border-color .15s,color .15s;
 }
-.hdr-btn:hover{border-color:var(--borderhi);color:var(--text);}
+.hdr-btn:hover{border-color:var(–borderhi);color:var(–text);}
 
 /* dark toggle */
 #dark-toggle{
-  background:var(--panel2);border:1.5px solid var(--border);border-radius:8px;
-  padding:6px 10px;color:var(--textdim);cursor:pointer;font-size:14px;
-  font-family:var(--sans);transition:all .15s;
+background:var(–panel2);border:1.5px solid var(–border);border-radius:8px;
+padding:6px 10px;color:var(–textdim);cursor:pointer;font-size:14px;
+font-family:var(–sans);transition:all .15s;
 }
-#dark-toggle:hover{border-color:var(--borderhi);}
+#dark-toggle:hover{border-color:var(–borderhi);}
 
 /* ── TODAY STRIP ── */
 .today-strip{display:flex;gap:8px;margin-top:14px;}
 .today-card{
-  flex:1;background:var(--bg);border-radius:10px;
-  padding:10px 11px;border:1px solid var(--border);
+flex:1;background:var(–bg);border-radius:10px;
+padding:10px 11px;border:1px solid var(–border);
 }
-.today-val{font-family:var(--serif);font-size:20px;font-weight:400;margin-top:3px;letter-spacing:-.2px;}
-.today-sub{font-size:9px;font-weight:600;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.4px;}
+.today-val{font-family:var(–serif);font-size:20px;font-weight:400;margin-top:3px;letter-spacing:-.2px;}
+.today-sub{font-size:9px;font-weight:600;color:var(–muted);margin-top:2px;text-transform:uppercase;letter-spacing:.4px;}
 
 /* ── GOAL BAR ── */
 .goal-bar-wrap{margin-top:14px;}
 .goal-bar-row{display:flex;justify-content:space-between;margin-bottom:5px;font-size:10px;font-weight:600;}
-.goal-bar-bg{height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.goal-bar-bg{height:5px;background:var(–border);border-radius:3px;overflow:hidden;}
 .goal-bar-fill{height:100%;border-radius:3px;transition:width .5s ease;}
 
 /* ── SYNC BAR ── */
 #sync-bar{
-  display:flex;align-items:center;gap:8px;padding:6px 14px;
-  background:var(--bg2);border-bottom:1px solid var(--border);
-  font-size:10px;font-weight:600;
+display:flex;align-items:center;gap:8px;padding:6px 14px;
+background:var(–bg2);border-bottom:1px solid var(–border);
+font-size:10px;font-weight:600;
 }
 #sync-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-#sync-dot.online{background:var(--green);}
-#sync-dot.offline{background:var(--amber);animation:pulse 1.8s infinite;}
-#sync-dot.syncing{background:var(--water);animation:pulse .7s infinite;}
-#sync-text{flex:1;color:var(--muted);}
+#sync-dot.online{background:var(–green);}
+#sync-dot.offline{background:var(–amber);animation:pulse 1.8s infinite;}
+#sync-dot.syncing{background:var(–water);animation:pulse .7s infinite;}
+#sync-text{flex:1;color:var(–muted);}
 #sync-btn{
-  background:var(--panel);border:1.5px solid var(--border);border-radius:6px;
-  padding:3px 9px;color:var(--textdim);cursor:pointer;font-size:9px;font-weight:700;font-family:var(--sans);
+background:var(–panel);border:1.5px solid var(–border);border-radius:6px;
+padding:3px 9px;color:var(–textdim);cursor:pointer;font-size:9px;font-weight:700;font-family:var(–sans);
 }
 
 /* ── STATS ── */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.stat-card{background:var(--bg);border-radius:10px;padding:12px;border:1px solid var(--border);}
-.stat-lbl{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;}
-.stat-val{font-family:var(--serif);font-size:22px;font-weight:400;margin-top:5px;}
+.stat-card{background:var(–bg);border-radius:10px;padding:12px;border:1px solid var(–border);}
+.stat-lbl{font-size:9px;font-weight:700;color:var(–muted);letter-spacing:.6px;text-transform:uppercase;}
+.stat-val{font-family:var(–serif);font-size:22px;font-weight:400;margin-top:5px;}
 
 /* ── HISTORY ── */
-.hist-item{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);}
-.hist-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:var(--bg);}
+.hist-item{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid var(–border);}
+.hist-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:var(–bg);}
 .hist-meta{flex:1;min-width:0;}
 .hist-title{font-size:13px;font-weight:700;}
-.hist-time{font-size:10px;font-weight:500;color:var(--muted);margin-top:2px;}
-.hist-notes{font-size:11px;color:var(--textdim);margin-top:3px;font-style:italic;}
+.hist-time{font-size:10px;font-weight:500;color:var(–muted);margin-top:2px;}
+.hist-notes{font-size:11px;color:var(–textdim);margin-top:3px;font-style:italic;}
 .hist-actions{display:flex;gap:4px;flex-shrink:0;}
 .hist-btn{
-  background:var(--bg);border:1.5px solid var(--border);color:var(--muted);cursor:pointer;
-  font-size:11px;font-weight:600;padding:4px 9px;border-radius:6px;font-family:var(--sans);
-  transition:color .15s,border-color .15s;
+background:var(–bg);border:1.5px solid var(–border);color:var(–muted);cursor:pointer;
+font-size:11px;font-weight:600;padding:4px 9px;border-radius:6px;font-family:var(–sans);
+transition:color .15s,border-color .15s;
 }
-.hist-btn:hover{color:var(--text);border-color:var(--borderhi);}
+.hist-btn:hover{color:var(–text);border-color:var(–borderhi);}
 
 /* ── FLASH ── */
 #flash{
-  position:fixed;top:20px;left:50%;transform:translateX(-50%);
-  padding:9px 20px;border-radius:9px;font-weight:700;z-index:999;
-  font-size:12px;white-space:nowrap;display:none;animation:pop .2s ease;
-  background:var(--panel);border:1.5px solid var(--border);color:var(--text);
-  box-shadow:0 4px 20px rgba(0,0,0,.12);
+position:fixed;top:20px;left:50%;transform:translateX(-50%);
+padding:9px 20px;border-radius:9px;font-weight:700;z-index:999;
+font-size:12px;white-space:nowrap;display:none;animation:pop .2s ease;
+background:var(–panel);border:1.5px solid var(–border);color:var(–text);
+box-shadow:0 4px 20px rgba(0,0,0,.12);
 }
 
 /* ── MODALS ── */
 #modal-overlay{position:fixed;inset:0;background:#00000066;z-index:200;display:none;align-items:flex-end;justify-content:center;}
 #modal-overlay.open{display:flex;}
 #modal-box{
-  background:var(--panel);border-radius:18px 18px 0 0;padding:24px;
-  width:100%;max-width:480px;border:1px solid var(--borderhi);border-bottom:none;
-  max-height:88vh;overflow-y:auto;animation:slideup .22s ease;
+background:var(–panel);border-radius:18px 18px 0 0;padding:24px;
+width:100%;max-width:480px;border:1px solid var(–borderhi);border-bottom:none;
+max-height:88vh;overflow-y:auto;animation:slideup .22s ease;
 }
 #setup-overlay{position:fixed;inset:0;background:#00000066;z-index:300;display:none;align-items:center;justify-content:center;padding:16px;}
 #setup-overlay.open{display:flex;}
 #setup-box{
-  background:var(--panel);border-radius:16px;padding:22px;width:100%;
-  max-width:440px;border:1px solid var(--borderhi);max-height:92vh;overflow-y:auto;
-  box-shadow:0 8px 40px rgba(0,0,0,.15);
+background:var(–panel);border-radius:16px;padding:22px;width:100%;
+max-width:440px;border:1px solid var(–borderhi);max-height:92vh;overflow-y:auto;
+box-shadow:0 8px 40px rgba(0,0,0,.15);
 }
-#setup-box h2{font-family:var(--serif);font-size:20px;margin-bottom:6px;}
-#setup-box p{font-size:12px;color:var(--textdim);line-height:1.75;margin-bottom:12px;}
-#setup-box ol{font-size:12px;color:var(--textdim);line-height:2.1;padding-left:18px;margin-bottom:14px;}
-#setup-box code{background:var(--bg);padding:2px 6px;border-radius:4px;font-size:10px;color:var(--water);border:1px solid var(--border);}
+#setup-box h2{font-family:var(–serif);font-size:20px;margin-bottom:6px;}
+#setup-box p{font-size:12px;color:var(–textdim);line-height:1.75;margin-bottom:12px;}
+#setup-box ol{font-size:12px;color:var(–textdim);line-height:2.1;padding-left:18px;margin-bottom:14px;}
+#setup-box code{background:var(–bg);padding:2px 6px;border-radius:4px;font-size:10px;color:var(–water);border:1px solid var(–border);}
 
 /* ── CHARTS ── */
 .barchart{display:flex;align-items:flex-end;gap:4px;padding-bottom:20px;}
 .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:110px;}
-.bar-val{font-size:9px;font-weight:600;color:var(--muted);margin-bottom:3px;}
+.bar-val{font-size:9px;font-weight:600;color:var(–muted);margin-bottom:3px;}
 .bar-fill{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height .35s ease;}
-.bar-lbl{font-size:8px;font-weight:600;color:var(--muted);margin-top:4px;text-align:center;}
+.bar-lbl{font-size:8px;font-weight:600;color:var(–muted);margin-top:4px;text-align:center;}
 
-.empty{text-align:center;color:var(--muted);padding-top:36px;font-size:12px;font-weight:500;}
+.empty{text-align:center;color:var(–muted);padding-top:36px;font-size:12px;font-weight:500;}
 .flex-row{display:flex;justify-content:space-between;align-items:center;}
-.day-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
+.day-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(–border);}
 
 /* ── TIMELINE ── */
 .tl-axis-row{display:flex;align-items:center;margin-bottom:4px;padding-left:42px;padding-right:2px;}
-.tl-axis-labels{flex:1;display:flex;justify-content:space-between;font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;}
+.tl-axis-labels{flex:1;display:flex;justify-content:space-between;font-size:9px;font-weight:700;color:var(–muted);letter-spacing:.3px;text-transform:uppercase;}
 .tl-day-row{display:flex;align-items:center;margin-bottom:2px;}
 .tl-day-label{width:38px;flex-shrink:0;text-align:right;padding-right:8px;line-height:1.2;}
-.tl-day-label .tl-day-name{font-size:10px;font-weight:700;color:var(--text);}
-.tl-day-label .tl-day-date{font-size:8px;font-weight:600;color:var(--muted);}
+.tl-day-label .tl-day-name{font-size:10px;font-weight:700;color:var(–text);}
+.tl-day-label .tl-day-date{font-size:8px;font-weight:600;color:var(–muted);}
 .tl-track{
-  flex:1;height:44px;position:relative;
-  background:var(--bg);border-radius:8px;border:1px solid var(--border);
-  overflow:visible;
+flex:1;height:44px;position:relative;
+background:var(–bg);border-radius:8px;border:1px solid var(–border);
+overflow:visible;
 }
 .tl-track::after{
-  content:'';position:absolute;left:0;right:0;top:50%;height:1px;
-  background:var(--border);pointer-events:none;
+content:’’;position:absolute;left:0;right:0;top:50%;height:1px;
+background:var(–border);pointer-events:none;
 }
 .tl-drink{
-  position:absolute;top:50%;border-radius:50%;
-  transform:translate(-50%,-50%);
-  border:2px solid rgba(255,255,255,.8);
-  box-shadow:0 1px 4px rgba(0,0,0,.12);
-  cursor:pointer;z-index:2;
-  transition:transform .12s;
+position:absolute;top:50%;border-radius:50%;
+transform:translate(-50%,-50%);
+border:2px solid rgba(255,255,255,.8);
+box-shadow:0 1px 4px rgba(0,0,0,.12);
+cursor:pointer;z-index:2;
+transition:transform .12s;
 }
 .tl-drink:hover{transform:translate(-50%,-50%) scale(1.35);z-index:5;}
 .tl-void{
-  position:absolute;top:50%;width:3px;
-  transform:translate(-50%,-50%);
-  border-radius:2px;
-  cursor:pointer;z-index:10;
-  box-shadow:0 0 0 1.5px rgba(255,255,255,.8);
-  transition:opacity .12s;
+position:absolute;top:50%;width:3px;
+transform:translate(-50%,-50%);
+border-radius:2px;
+cursor:pointer;z-index:10;
+box-shadow:0 0 0 1.5px rgba(255,255,255,.8);
+transition:opacity .12s;
 }
 .tl-void:hover{opacity:1;z-index:15;}
 .tl-sum-row{display:flex;align-items:center;margin-bottom:8px;padding-left:42px;padding-right:2px;}
 .tl-sum-chips{display:flex;gap:6px;}
-.tl-chip{font-size:9px;font-weight:700;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 7px;}
+.tl-chip{font-size:9px;font-weight:700;background:var(–bg);border:1px solid var(–border);border-radius:5px;padding:2px 7px;}
 .tl-legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
-.tl-leg{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--textdim);}
+.tl-leg{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(–textdim);}
 .tl-leg-dot{width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);}
 .tl-leg-tick{width:3px;height:12px;border-radius:2px;}
 
 /* tooltip */
 #tl-tooltip{
-  position:fixed;background:var(--text);color:var(--panel);
-  padding:6px 11px;border-radius:8px;font-size:11px;font-weight:600;line-height:1.5;
-  pointer-events:none;z-index:200;opacity:0;transition:opacity .1s;
-  white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.18);
+position:fixed;background:var(–text);color:var(–panel);
+padding:6px 11px;border-radius:8px;font-size:11px;font-weight:600;line-height:1.5;
+pointer-events:none;z-index:200;opacity:0;transition:opacity .1s;
+white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.18);
 }
 #tl-tooltip.show{opacity:1;}
 </style>
+
 </head>
 <body>
 <div id="app">
 
   <!-- HEADER -->
+
   <div id="header">
     <div class="hdr-row">
       <div>
@@ -378,34 +388,38 @@ html.dark .btn-void{border-color:#4a3558;}
       </div>
     </div>
 
-    <div class="today-strip">
-      <div class="today-card">
-        <div class="today-sub">Intake</div>
-        <div class="today-val" style="color:var(--water)" id="hdr-intake">0.0 oz</div>
-        <div style="font-size:9px;color:var(--muted);margin-top:1px" id="hdr-intake-sub">of 83 oz</div>
-      </div>
-      <div class="today-card">
-        <div class="today-sub">Voids</div>
-        <div class="today-val" style="color:var(--void)" id="hdr-voids">0</div>
-        <div style="font-size:9px;color:var(--muted);margin-top:1px">today</div>
-      </div>
-      <div class="today-card">
-        <div class="today-sub">Drinks</div>
-        <div class="today-val" style="color:var(--green)" id="hdr-drinks">0</div>
-        <div style="font-size:9px;color:var(--muted);margin-top:1px">today</div>
-      </div>
-    </div>
+```
+<div class="today-strip">
+  <div class="today-card">
+    <div class="today-sub">Intake</div>
+    <div class="today-val" style="color:var(--water)" id="hdr-intake">0.0 oz</div>
+    <div style="font-size:9px;color:var(--muted);margin-top:1px" id="hdr-intake-sub">of 83 oz</div>
+  </div>
+  <div class="today-card">
+    <div class="today-sub">Voids</div>
+    <div class="today-val" style="color:var(--void)" id="hdr-voids">0</div>
+    <div style="font-size:9px;color:var(--muted);margin-top:1px">today</div>
+  </div>
+  <div class="today-card">
+    <div class="today-sub">Drinks</div>
+    <div class="today-val" style="color:var(--green)" id="hdr-drinks">0</div>
+    <div style="font-size:9px;color:var(--muted);margin-top:1px">today</div>
+  </div>
+</div>
 
-    <div class="goal-bar-wrap">
-      <div class="goal-bar-row">
-        <span style="color:var(--muted)">Daily goal</span>
-        <span id="goal-label" style="color:var(--muted)">0 / 83 oz</span>
-      </div>
-      <div class="goal-bar-bg"><div class="goal-bar-fill" id="goal-fill" style="width:0%"></div></div>
-    </div>
+<div class="goal-bar-wrap">
+  <div class="goal-bar-row">
+    <span style="color:var(--muted)">Daily goal</span>
+    <span id="goal-label" style="color:var(--muted)">0 / 83 oz</span>
+  </div>
+  <div class="goal-bar-bg"><div class="goal-bar-fill" id="goal-fill" style="width:0%"></div></div>
+</div>
+```
+
   </div>
 
   <!-- SYNC BAR -->
+
   <div id="sync-bar">
     <div id="sync-dot" class="offline"></div>
     <div id="sync-text">Sheets not configured</div>
@@ -413,6 +427,7 @@ html.dark .btn-void{border-color:#4a3558;}
   </div>
 
   <!-- TABS -->
+
   <div id="tabs">
     <button class="tab-btn active" onclick="switchTab('log')">Log</button>
     <button class="tab-btn" onclick="switchTab('timeline')">Timeline</button>
@@ -422,167 +437,172 @@ html.dark .btn-void{border-color:#4a3558;}
   </div>
 
   <!-- CONTENT -->
+
   <div id="content">
 
-    <!-- LOG TAB -->
-    <div class="tab-panel active" id="tab-log">
+```
+<!-- LOG TAB -->
+<div class="tab-panel active" id="tab-log">
 
-      <!-- QUICK LOG -->
-      <div class="panel">
-        <div class="section-head">Quick log</div>
-        <div class="quick-grid">
-          <button class="quick-btn water" onclick="quickLog(0,16)">
-            <span class="quick-emoji">💧</span>
-            <span class="quick-label">Water</span>
-            <span class="quick-sub">16 oz</span>
-          </button>
-          <button class="quick-btn spark" onclick="quickLog(1,12)">
-            <span class="quick-emoji">🫧</span>
-            <span class="quick-label">Sparkling</span>
-            <span class="quick-sub">12 oz</span>
-          </button>
-          <button class="quick-btn coffee" onclick="quickLog(2,8)">
-            <span class="quick-emoji">☕</span>
-            <span class="quick-label">Coffee</span>
-            <span class="quick-sub">8 oz</span>
-          </button>
-        </div>
-      </div>
+  <!-- QUICK LOG -->
+  <div class="panel">
+    <div class="section-head">Quick log</div>
+    <div class="quick-grid">
+      <button class="quick-btn water" onclick="quickLog(0,16)">
+        <span class="quick-emoji">💧</span>
+        <span class="quick-label">Water</span>
+        <span class="quick-sub">16 oz</span>
+      </button>
+      <button class="quick-btn spark" onclick="quickLog(1,12)">
+        <span class="quick-emoji">🫧</span>
+        <span class="quick-label">Sparkling</span>
+        <span class="quick-sub">12 oz</span>
+      </button>
+      <button class="quick-btn coffee" onclick="quickLog(2,8)">
+        <span class="quick-emoji">☕</span>
+        <span class="quick-label">Coffee</span>
+        <span class="quick-sub">8 oz</span>
+      </button>
+    </div>
+  </div>
 
-      <!-- DRINK FORM -->
-      <div class="panel">
-        <div class="section-head">Log a drink</div>
-        <div class="label">Type</div>
-        <div class="chips" id="drink-type-chips"></div>
-        <div class="label">Amount (oz)</div>
-        <div class="chips" id="drink-amt-chips">
-          <input class="inp inp-sm" type="number" placeholder="oz" id="custom-oz" oninput="setCustomOz(this.value)">
-        </div>
-        <div class="label">Notes</div>
-        <input class="inp mb10" type="text" id="drink-notes" placeholder="e.g. with meal, post-workout…">
-        <div class="label">Date &amp; Time</div>
-        <div class="time-row" onclick="openTimePicker('drink-time')">
-          <span class="time-row-val" id="drink-time-display"></span>
-          <button class="time-row-btn" tabindex="-1">Change</button>
-        </div>
-        <input class="time-inp-hidden" type="datetime-local" id="drink-time" oninput="updateTimeDisplay('drink-time')">
-        <button class="btn-log" id="drink-log-btn" onclick="logDrink()">Log 8 oz Water</button>
-      </div>
+  <!-- DRINK FORM -->
+  <div class="panel">
+    <div class="section-head">Log a drink</div>
+    <div class="label">Type</div>
+    <div class="chips" id="drink-type-chips"></div>
+    <div class="label">Amount (oz)</div>
+    <div class="chips" id="drink-amt-chips">
+      <input class="inp inp-sm" type="number" placeholder="oz" id="custom-oz" oninput="setCustomOz(this.value)">
+    </div>
+    <div class="label">Notes</div>
+    <input class="inp mb10" type="text" id="drink-notes" placeholder="e.g. with meal, post-workout…">
+    <div class="label">Date &amp; Time</div>
+    <div class="time-row">
+      <span class="time-row-val" id="drink-time-display"></span>
+      <button class="time-row-btn" tabindex="-1">Change</button>
+      <input class="time-inp-hidden" type="datetime-local" id="drink-time" oninput="updateTimeDisplay('drink-time')">
+    </div>
+    <button class="btn-log" id="drink-log-btn" onclick="logDrink()">Log 8 oz Water</button>
+  </div>
 
-      <!-- VOID FORM -->
-      <div class="panel alt">
-        <div class="section-head">Log a void</div>
-        <div class="label">Notes</div>
-        <input class="inp mb10" type="text" id="void-notes" placeholder="e.g. urgency 3/5, pale yellow…">
-        <div class="label">Date &amp; Time</div>
-        <div class="time-row" onclick="openTimePicker('void-time')">
-          <span class="time-row-val" id="void-time-display"></span>
-          <button class="time-row-btn" tabindex="-1">Change</button>
-        </div>
-        <input class="time-inp-hidden" type="datetime-local" id="void-time" oninput="updateTimeDisplay('void-time')">
-        <button class="btn-void" onclick="logVoid()">🚽&nbsp; Log void</button>
+  <!-- VOID FORM -->
+  <div class="panel alt">
+    <div class="section-head">Log a void</div>
+    <div class="label">Notes</div>
+    <input class="inp mb10" type="text" id="void-notes" placeholder="e.g. urgency 3/5, pale yellow…">
+    <div class="label">Date &amp; Time</div>
+    <div class="time-row">
+      <span class="time-row-val" id="void-time-display"></span>
+      <button class="time-row-btn" tabindex="-1">Change</button>
+      <input class="time-inp-hidden" type="datetime-local" id="void-time" oninput="updateTimeDisplay('void-time')">
+    </div>
+    <button class="btn-void" onclick="logVoid()">🚽&nbsp; Log void</button>
+  </div>
+</div>
+
+<!-- TIMELINE TAB -->
+<div class="tab-panel" id="tab-timeline">
+  <div class="panel">
+    <div class="section-head">Daily timeline</div>
+    <div class="tl-legend" id="tl-legend"></div>
+    <div class="tl-axis-row">
+      <div class="tl-axis-labels">
+        <span>7a</span><span>10a</span><span>1p</span><span>4p</span><span>7p</span><span>11p</span>
       </div>
     </div>
+    <div id="tl-container"></div>
+    <div style="margin-top:10px;font-size:10px;font-weight:600;color:var(--muted)">Circle size = oz consumed &nbsp;·&nbsp; Purple ticks = voids</div>
+  </div>
+</div>
 
-    <!-- TIMELINE TAB -->
-    <div class="tab-panel" id="tab-timeline">
-      <div class="panel">
-        <div class="section-head">Daily timeline</div>
-        <div class="tl-legend" id="tl-legend"></div>
-        <div class="tl-axis-row">
-          <div class="tl-axis-labels">
-            <span>7a</span><span>10a</span><span>1p</span><span>4p</span><span>7p</span><span>11p</span>
-          </div>
-        </div>
-        <div id="tl-container"></div>
-        <div style="margin-top:10px;font-size:10px;font-weight:600;color:var(--muted)">Circle size = oz consumed &nbsp;·&nbsp; Purple ticks = voids</div>
+<!-- CHARTS TAB -->
+<div class="tab-panel" id="tab-charts">
+  <div class="panel">
+    <div class="section-head">Daily voids</div>
+    <div class="barchart" id="bc-voids"></div>
+  </div>
+  <div class="panel">
+    <div class="section-head">Daily intake (oz)</div>
+    <div class="barchart" id="bc-intake"></div>
+    <div style="font-size:10px;font-weight:600;color:var(--muted);margin-top:4px;display:flex;gap:14px">
+      <span style="color:var(--green)">● ≥83 oz</span>
+      <span style="color:var(--amber)">● 50–82 oz</span>
+      <span style="color:var(--red)">● &lt;50 oz</span>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="section-head">Void gap over time</div>
+    <div style="font-size:10px;font-weight:500;color:var(--muted);margin-bottom:10px">Minutes between each void</div>
+    <svg id="sparkline-svg" viewBox="0 0 320 90" style="width:100%;height:90px"></svg>
+    <div style="display:flex;justify-content:space-between;margin-top:2px">
+      <span style="font-size:9px;font-weight:600;color:var(--muted)">earliest</span>
+      <span style="font-size:9px;font-weight:600;color:var(--muted)">latest</span>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="section-head">Drink volume vs. void gap</div>
+    <div style="font-size:10px;font-weight:500;color:var(--muted);margin-bottom:10px">Each dot = one void interval. X = oz consumed, Y = gap in minutes.</div>
+    <svg id="scatter-svg" viewBox="0 0 280 120" style="width:100%;height:120px"></svg>
+    <div id="scatter-empty" class="empty" style="padding-top:10px;display:none;font-size:11px">Need more data.</div>
+  </div>
+</div>
+
+<!-- STATS TAB -->
+<div class="tab-panel" id="tab-stats">
+  <div class="panel">
+    <div class="section-head">Void intervals</div>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-lbl">Avg gap (daytime)</div>
+        <div class="stat-val" style="color:var(--void)" id="stat-avg">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Avg voids / day</div>
+        <div class="stat-val" style="color:var(--void)" id="stat-total">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Longest daytime gap</div>
+        <div class="stat-val" style="color:var(--amber)" id="stat-max">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Oz per void (est.)</div>
+        <div class="stat-val" style="color:var(--green)" id="stat-ozpervoid">—</div>
       </div>
     </div>
-
-    <!-- CHARTS TAB -->
-    <div class="tab-panel" id="tab-charts">
-      <div class="panel">
-        <div class="section-head">Daily voids</div>
-        <div class="barchart" id="bc-voids"></div>
-      </div>
-      <div class="panel">
-        <div class="section-head">Daily intake (oz)</div>
-        <div class="barchart" id="bc-intake"></div>
-        <div style="font-size:10px;font-weight:600;color:var(--muted);margin-top:4px;display:flex;gap:14px">
-          <span style="color:var(--green)">● ≥83 oz</span>
-          <span style="color:var(--amber)">● 50–82 oz</span>
-          <span style="color:var(--red)">● &lt;50 oz</span>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="section-head">Void gap over time</div>
-        <div style="font-size:10px;font-weight:500;color:var(--muted);margin-bottom:10px">Minutes between each void</div>
-        <svg id="sparkline-svg" viewBox="0 0 320 90" style="width:100%;height:90px"></svg>
-        <div style="display:flex;justify-content:space-between;margin-top:2px">
-          <span style="font-size:9px;font-weight:600;color:var(--muted)">earliest</span>
-          <span style="font-size:9px;font-weight:600;color:var(--muted)">latest</span>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="section-head">Drink volume vs. void gap</div>
-        <div style="font-size:10px;font-weight:500;color:var(--muted);margin-bottom:10px">Each dot = one void interval. X = oz consumed, Y = gap in minutes.</div>
-        <svg id="scatter-svg" viewBox="0 0 280 120" style="width:100%;height:120px"></svg>
-        <div id="scatter-empty" class="empty" style="padding-top:10px;display:none;font-size:11px">Need more data.</div>
-      </div>
+    <div style="margin-top:12px;font-size:11px;font-weight:500;color:var(--muted);line-height:1.9">
+      <div id="stat-max-when"></div>
     </div>
+  </div>
+  <div class="panel">
+    <div class="section-head">Last 7 days</div>
+    <div id="daily-breakdown"></div>
+  </div>
+  <div class="panel">
+    <div class="section-head">Correlation insight</div>
+    <div id="correlation-insight" style="font-size:12px;font-weight:500;color:var(--textdim);line-height:1.8"></div>
+  </div>
+</div>
 
-    <!-- STATS TAB -->
-    <div class="tab-panel" id="tab-stats">
-      <div class="panel">
-        <div class="section-head">Void intervals</div>
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-lbl">Avg gap (daytime)</div>
-            <div class="stat-val" style="color:var(--void)" id="stat-avg">—</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-lbl">Avg voids / day</div>
-            <div class="stat-val" style="color:var(--void)" id="stat-total">—</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-lbl">Longest daytime gap</div>
-            <div class="stat-val" style="color:var(--amber)" id="stat-max">—</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-lbl">Oz per void (est.)</div>
-            <div class="stat-val" style="color:var(--green)" id="stat-ozpervoid">—</div>
-          </div>
-        </div>
-        <div style="margin-top:12px;font-size:11px;font-weight:500;color:var(--muted);line-height:1.9">
-          <div id="stat-max-when"></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="section-head">Last 7 days</div>
-        <div id="daily-breakdown"></div>
-      </div>
-      <div class="panel">
-        <div class="section-head">Correlation insight</div>
-        <div id="correlation-insight" style="font-size:12px;font-weight:500;color:var(--textdim);line-height:1.8"></div>
-      </div>
-    </div>
-
-    <!-- HISTORY TAB -->
-    <div class="tab-panel" id="tab-history">
-      <div class="flex-row" style="margin-bottom:12px">
-        <div style="font-size:11px;font-weight:600;color:var(--muted)">All events, newest first</div>
-        <div style="font-size:11px;font-weight:600;color:var(--muted)" id="hist-count">0 entries</div>
-      </div>
-      <div id="history-list"></div>
-    </div>
+<!-- HISTORY TAB -->
+<div class="tab-panel" id="tab-history">
+  <div class="flex-row" style="margin-bottom:12px">
+    <div style="font-size:11px;font-weight:600;color:var(--muted)">All events, newest first</div>
+    <div style="font-size:11px;font-weight:600;color:var(--muted)" id="hist-count">0 entries</div>
+  </div>
+  <div id="history-list"></div>
+</div>
+```
 
   </div>
 </div>
 
 <!-- FLASH -->
+
 <div id="flash"></div>
 
 <!-- EDIT MODAL -->
+
 <div id="modal-overlay" onclick="closeModal(event)">
   <div id="modal-box">
     <div id="modal-title" style="font-family:var(--serif);font-size:19px;font-weight:400;margin-bottom:18px"></div>
@@ -595,11 +615,11 @@ html.dark .btn-void{border-color:#4a3558;}
       </div>
     </div>
     <div class="label">Time</div>
-    <div class="time-row mb14" onclick="openTimePicker('modal-time')">
+    <div class="time-row mb14">
       <span class="time-row-val" id="modal-time-display"></span>
       <button class="time-row-btn" tabindex="-1">Change</button>
+      <input class="time-inp-hidden" type="datetime-local" id="modal-time" oninput="updateTimeDisplay('modal-time')">
     </div>
-    <input class="time-inp-hidden" type="datetime-local" id="modal-time" oninput="updateTimeDisplay('modal-time')">
     <div class="label">Notes</div>
     <textarea class="inp mb14" id="modal-notes" rows="3" style="min-height:72px"></textarea>
     <div style="display:flex;gap:10px">
@@ -610,6 +630,7 @@ html.dark .btn-void{border-color:#4a3558;}
 </div>
 
 <!-- SETUP MODAL -->
+
 <div id="setup-overlay">
   <div id="setup-box">
     <h2>Google Sheets sync</h2>
@@ -638,6 +659,7 @@ html.dark .btn-void{border-color:#4a3558;}
 </div>
 
 <!-- TIMELINE TOOLTIP -->
+
 <div id="tl-tooltip"></div>
 
 <script>
@@ -990,13 +1012,7 @@ function updateTimeDisplay(inputId){
   const el=document.getElementById(inputId+'-display');
   if(el)el.textContent=fmtLocalISO(val);
 }
-function openTimePicker(inputId){
-  const inp=document.getElementById(inputId);
-  inp.style.position='fixed';inp.style.top='50%';inp.style.left='50%';
-  inp.style.opacity='0';inp.style.width='1px';inp.style.height='1px';inp.style.pointerEvents='auto';
-  inp.showPicker?inp.showPicker():inp.click();
-  setTimeout(()=>{inp.style.position='absolute';inp.style.pointerEvents='none';inp.style.width='0';inp.style.height='0';},300);
-}
+// time picker handled by native input overlay
 
 // ── header ────────────────────────────────────────────────────────────────────
 function renderHeader(){
@@ -1373,5 +1389,6 @@ function dl(text,mime,filename){const a=document.createElement('a');a.href=URL.c
   if(syncQueue.length>0&&navigator.onLine&&scriptUrl)flushQueue();
 })();
 </script>
+
 </body>
 </html>
