@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Fluid·Void">
+<title>Fluid · Void</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+/* ── LIGHT THEME (default) ── */
+:root{
+  --bg:#f2f0eb;
+  --bg2:#ece9e3;
+  --panel:#ffffff;
+  --panel2:#f7f5f0;
+  --border:#ddd9d0;
+  --borderhi:#c8c2b5;
+  --water:#2d8a7a;
+  --water-dim:#e8f4f1;
+  --water-chip:#d0ede8;
+  --void:#7a5c8a;
+  --void-dim:#f0eaf4;
+  --void-chip:#e2d5ea;
+  --green:#2e7a52;
+  --green-dim:#e6f2ec;
+  --amber:#9a6830;
+  --amber-dim:#f5edd8;
+  --red:#8a3a3a;
+  --red-dim:#f5e8e8;
+  --muted:#888078;
+  --text:#1a1814;
+  --textdim:#6a6358;
+  --shadow:0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'DM Sans','Helvetica Neue',sans-serif;
+}
+
+/* ── DARK THEME ── */
+html.dark{
+  --bg:#161b18;
+  --bg2:#1c2220;
+  --panel:#222a27;
+  --panel2:#1e2522;
+  --border:#2d3630;
+  --borderhi:#374039;
+  --water:#5aa898;
+  --water-dim:#1e3d38;
+  --water-chip:#1e3d38;
+  --void:#9b7fa6;
+  --void-dim:#2a1f30;
+  --void-chip:#2a1f30;
+  --green:#5a9e78;
+  --green-dim:#1a3328;
+  --amber:#b8895a;
+  --amber-dim:#3d2e1e;
+  --red:#a05a5a;
+  --red-dim:#3a1a1a;
+  --muted:#5a6860;
+  --text:#dde5e0;
+  --textdim:#8a9e95;
+  --shadow:none;
+}
+
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-text-size-adjust:100%;font-size:14px;transition:background .2s,color .2s;}
+body{padding-bottom:env(safe-area-inset-bottom);}
+input,textarea,button{font-family:var(--sans);}
+input[type=number]::-webkit-inner-spin-button{opacity:0;}
+textarea{resize:vertical;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+@keyframes pop{from{opacity:0;transform:translateX(-50%) scale(.94);}to{opacity:1;transform:translateX(-50%) scale(1);}}
+@keyframes slideup{from{transform:translateY(100%);}to{transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+@keyframes quickpop{0%{transform:scale(1);}40%{transform:scale(.93);}100%{transform:scale(1);}}
+
+/* ── LAYOUT ── */
+#app{min-height:100vh;display:flex;flex-direction:column;}
+
+#header{
+  background:var(--panel);border-bottom:1px solid var(--border);
+  padding:18px 16px 14px;
+  padding-top:calc(18px + env(safe-area-inset-top));
+  box-shadow:var(--shadow);
+}
+
+#tabs{display:flex;border-bottom:1px solid var(--border);background:var(--panel);flex-shrink:0;}
+.tab-btn{
+  flex:1;padding:12px 0;background:none;border:none;color:var(--muted);
+  border-bottom:2px solid transparent;cursor:pointer;font-size:11px;font-weight:600;
+  letter-spacing:.6px;text-transform:uppercase;font-family:var(--sans);
+  transition:color .15s,border-color .15s;
+}
+.tab-btn.active{color:var(--water);border-bottom-color:var(--water);}
+
+#content{flex:1;padding:14px 12px;overflow-y:auto;padding-bottom:48px;}
+.tab-panel{display:none;flex-direction:column;gap:12px;}
+.tab-panel.active{display:flex;}
+
+/* ── PANELS ── */
+.panel{
+  background:var(--panel);border-radius:14px;padding:16px;
+  border:1px solid var(--border);box-shadow:var(--shadow);
+}
+.panel.alt{background:var(--panel2);}
+.section-head{
+  font-family:var(--serif);font-size:17px;font-weight:400;
+  margin-bottom:14px;color:var(--text);letter-spacing:-.2px;
+}
+.label{
+  font-size:10px;font-weight:700;letter-spacing:.9px;
+  color:var(--muted);margin-bottom:7px;text-transform:uppercase;
+}
+
+/* ── QUICK LOG BUTTONS ── */
+.quick-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:4px;}
+.quick-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;padding:12px 6px;border-radius:12px;border:1.5px solid var(--border);
+  background:var(--panel2);cursor:pointer;font-family:var(--sans);
+  transition:all .15s;box-shadow:var(--shadow);
+}
+.quick-btn:active{animation:quickpop .2s ease;opacity:.8;}
+.quick-emoji{font-size:20px;line-height:1;}
+.quick-label{font-size:11px;font-weight:700;color:var(--text);}
+.quick-sub{font-size:9px;font-weight:500;color:var(--muted);}
+
+.quick-btn.water{border-color:var(--water-chip);background:var(--water-dim);}
+.quick-btn.water .quick-label{color:var(--water);}
+.quick-btn.spark{border-color:var(--water-chip);background:var(--water-dim);}
+.quick-btn.spark .quick-label{color:var(--water);}
+.quick-btn.coffee{border-color:var(--amber-dim);background:var(--amber-dim);}
+.quick-btn.coffee .quick-label{color:var(--amber);}
+
+html.dark .quick-btn.water{border-color:#2a5048;}
+html.dark .quick-btn.spark{border-color:#2a5048;}
+html.dark .quick-btn.coffee{border-color:#5a3a1a;}
+
+/* ── CHIPS ── */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.chip{
+  padding:6px 13px;border-radius:8px;border:1.5px solid var(--border);
+  cursor:pointer;background:transparent;color:var(--textdim);
+  font-size:12px;font-weight:600;font-family:var(--sans);transition:all .15s;
+}
+.chip:hover{border-color:var(--borderhi);color:var(--text);}
+.chip.active{border-color:transparent;}
+
+/* ── INPUTS ── */
+.inp{
+  padding:9px 12px;border-radius:9px;background:var(--bg);border:1.5px solid var(--border);
+  color:var(--text);font-size:13px;font-weight:500;outline:none;width:100%;
+  transition:border-color .15s;
+}
+.inp:focus{border-color:var(--borderhi);}
+.inp::placeholder{color:var(--muted);}
+.inp-sm{width:72px;}
+.mb10{margin-bottom:10px;}
+.mb12{margin-bottom:12px;}
+.mb14{margin-bottom:14px;}
+
+/* ── TIME ROW ── */
+.time-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg);border:1.5px solid var(--border);border-radius:9px;
+  padding:8px 12px;margin-bottom:12px;cursor:pointer;
+}
+.time-row-val{font-size:13px;font-weight:500;color:var(--textdim);}
+.time-row-btn{
+  background:var(--panel);border:1.5px solid var(--border);border-radius:6px;
+  padding:4px 10px;font-size:11px;font-weight:700;color:var(--muted);
+  cursor:pointer;font-family:var(--sans);white-space:nowrap;
+  transition:color .15s,border-color .15s;
+}
+.time-row-btn:hover{color:var(--text);border-color:var(--borderhi);}
+.time-inp-hidden{position:absolute;opacity:0;pointer-events:none;width:0;height:0;}
+
+/* ── LOG BUTTONS ── */
+.btn-log{
+  width:100%;padding:14px;border-radius:11px;border:none;
+  font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);
+  transition:opacity .15s,transform .1s;letter-spacing:.1px;
+}
+.btn-log:active{transform:scale(.98);opacity:.85;}
+
+/* ── VOID BUTTON ── */
+.btn-void{
+  width:100%;padding:14px;border-radius:11px;border:none;
+  font-size:14px;font-weight:700;cursor:pointer;font-family:var(--sans);
+  background:var(--void-dim);color:var(--void);
+  border:1.5px solid var(--void-chip);
+  transition:opacity .15s,transform .1s;
+}
+html.dark .btn-void{border-color:#4a3558;}
+.btn-void:active{transform:scale(.98);opacity:.85;}
+
+/* ── HEADER ── */
+.hdr-row{display:flex;justify-content:space-between;align-items:flex-start;}
+.hdr-title{font-family:var(--serif);font-size:26px;font-weight:400;color:var(--text);letter-spacing:-.3px;}
+.hdr-controls{display:flex;gap:6px;align-items:center;margin-top:3px;}
+.hdr-btn{
+  background:var(--panel2);border:1.5px solid var(--border);border-radius:8px;
+  padding:6px 10px;color:var(--textdim);cursor:pointer;font-size:10px;font-weight:700;
+  font-family:var(--sans);transition:border-color .15s,color .15s;
+}
+.hdr-btn:hover{border-color:var(--borderhi);color:var(--text);}
+
+/* dark toggle */
+#dark-toggle{
+  background:var(--panel2);border:1.5px solid var(--border);border-radius:8px;
+  padding:6px 10px;color:var(--textdim);cursor:pointer;font-size:14px;
+  font-family:var(--sans);transition:all .15s;
+}
+#dark-toggle:hover{border-color:var(--borderhi);}
+
+/* ── TODAY STRIP ── */
+.today-strip{display:flex;gap:8px;margin-top:14px;}
+.today-card{
+  flex:1;background:var(--bg);border-radius:10px;
+  padding:10px 11px;border:1px solid var(--border);
+}
+.today-val{font-family:var(--serif);font-size:20px;font-weight:400;margin-top:3px;letter-spacing:-.2px;}
+.today-sub{font-size:9px;font-weight:600;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.4px;}
+
+/* ── GOAL BAR ── */
+.goal-bar-wrap{margin-top:14px;}
+.goal-bar-row{display:flex;justify-content:space-between;margin-bottom:5px;font-size:10px;font-weight:600;}
+.goal-bar-bg{height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.goal-bar-fill{height:100%;border-radius:3px;transition:width .5s ease;}
+
+/* ── SYNC BAR ── */
+#sync-bar{
+  display:flex;align-items:center;gap:8px;padding:6px 14px;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  font-size:10px;font-weight:600;
+}
+#sync-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+#sync-dot.online{background:var(--green);}
+#sync-dot.offline{background:var(--amber);animation:pulse 1.8s infinite;}
+#sync-dot.syncing{background:var(--water);animation:pulse .7s infinite;}
+#sync-text{flex:1;color:var(--muted);}
+#sync-btn{
+  background:var(--panel);border:1.5px solid var(--border);border-radius:6px;
+  padding:3px 9px;color:var(--textdim);cursor:pointer;font-size:9px;font-weight:700;font-family:var(--sans);
+}
+
+/* ── STATS ── */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.stat-card{background:var(--bg);border-radius:10px;padding:12px;border:1px solid var(--border);}
+.stat-lbl{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;}
+.stat-val{font-family:var(--serif);font-size:22px;font-weight:400;margin-top:5px;}
+
+/* ── HISTORY ── */
+.hist-item{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);}
+.hist-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:var(--bg);}
+.hist-meta{flex:1;min-width:0;}
+.hist-title{font-size:13px;font-weight:700;}
+.hist-time{font-size:10px;font-weight:500;color:var(--muted);margin-top:2px;}
+.hist-notes{font-size:11px;color:var(--textdim);margin-top:3px;font-style:italic;}
+.hist-actions{display:flex;gap:4px;flex-shrink:0;}
+.hist-btn{
+  background:var(--bg);border:1.5px solid var(--border);color:var(--muted);cursor:pointer;
+  font-size:11px;font-weight:600;padding:4px 9px;border-radius:6px;font-family:var(--sans);
+  transition:color .15s,border-color .15s;
+}
+.hist-btn:hover{color:var(--text);border-color:var(--borderhi);}
+
+/* ── FLASH ── */
+#flash{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  padding:9px 20px;border-radius:9px;font-weight:700;z-index:999;
+  font-size:12px;white-space:nowrap;display:none;animation:pop .2s ease;
+  background:var(--panel);border:1.5px solid var(--border);color:var(--text);
+  box-shadow:0 4px 20px rgba(0,0,0,.12);
+}
+
+/* ── MODALS ── */
+#modal-overlay{position:fixed;inset:0;background:#00000066;z-index:200;display:none;align-items:flex-end;justify-content:center;}
+#modal-overlay.open{display:flex;}
+#modal-box{
+  background:var(--panel);border-radius:18px 18px 0 0;padding:24px;
+  width:100%;max-width:480px;border:1px solid var(--borderhi);border-bottom:none;
+  max-height:88vh;overflow-y:auto;animation:slideup .22s ease;
+}
+#setup-overlay{position:fixed;inset:0;background:#00000066;z-index:300;display:none;align-items:center;justify-content:center;padding:16px;}
+#setup-overlay.open{display:flex;}
+#setup-box{
+  background:var(--panel);border-radius:16px;padding:22px;width:100%;
+  max-width:440px;border:1px solid var(--borderhi);max-height:92vh;overflow-y:auto;
+  box-shadow:0 8px 40px rgba(0,0,0,.15);
+}
+#setup-box h2{font-family:var(--serif);font-size:20px;margin-bottom:6px;}
+#setup-box p{font-size:12px;color:var(--textdim);line-height:1.75;margin-bottom:12px;}
+#setup-box ol{font-size:12px;color:var(--textdim);line-height:2.1;padding-left:18px;margin-bottom:14px;}
+#setup-box code{background:var(--bg);padding:2px 6px;border-radius:4px;font-size:10px;color:var(--water);border:1px solid var(--border);}
+
+/* ── CHARTS ── */
+.barchart{display:flex;align-items:flex-end;gap:4px;padding-bottom:20px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:110px;}
+.bar-val{font-size:9px;font-weight:600;color:var(--muted);margin-bottom:3px;}
+.bar-fill{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height .35s ease;}
+.bar-lbl{font-size:8px;font-weight:600;color:var(--muted);margin-top:4px;text-align:center;}
+
+.empty{text-align:center;color:var(--muted);padding-top:36px;font-size:12px;font-weight:500;}
+.flex-row{display:flex;justify-content:space-between;align-items:center;}
+.day-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
+
+/* ── TIMELINE ── */
+.tl-axis-row{display:flex;align-items:center;margin-bottom:4px;padding-left:42px;padding-right:2px;}
+.tl-axis-labels{flex:1;display:flex;justify-content:space-between;font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;}
+.tl-day-row{display:flex;align-items:center;margin-bottom:2px;}
+.tl-day-label{width:38px;flex-shrink:0;text-align:right;padding-right:8px;line-height:1.2;}
+.tl-day-label .tl-day-name{font-size:10px;font-weight:700;color:var(--text);}
+.tl-day-label .tl-day-date{font-size:8px;font-weight:600;color:var(--muted);}
+.tl-track{
+  flex:1;height:44px;position:relative;
+  background:var(--bg);border-radius:8px;border:1px solid var(--border);
+  overflow:visible;
+}
+.tl-track::after{
+  content:'';position:absolute;left:0;right:0;top:50%;height:1px;
+  background:var(--border);pointer-events:none;
+}
+.tl-drink{
+  position:absolute;top:50%;border-radius:50%;
+  transform:translate(-50%,-50%);
+  border:2px solid rgba(255,255,255,.8);
+  box-shadow:0 1px 4px rgba(0,0,0,.12);
+  cursor:pointer;z-index:2;
+  transition:transform .12s;
+}
+.tl-drink:hover{transform:translate(-50%,-50%) scale(1.35);z-index:5;}
+.tl-void{
+  position:absolute;top:50%;width:3px;
+  transform:translate(-50%,-50%);
+  border-radius:2px;
+  cursor:pointer;z-index:10;
+  box-shadow:0 0 0 1.5px rgba(255,255,255,.8);
+  transition:opacity .12s;
+}
+.tl-void:hover{opacity:1;z-index:15;}
+.tl-sum-row{display:flex;align-items:center;margin-bottom:8px;padding-left:42px;padding-right:2px;}
+.tl-sum-chips{display:flex;gap:6px;}
+.tl-chip{font-size:9px;font-weight:700;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 7px;}
+.tl-legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+.tl-leg{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--textdim);}
+.tl-leg-dot{width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);}
+.tl-leg-tick{width:3px;height:12px;border-radius:2px;}
+
+/* tooltip */
+#tl-tooltip{
+  position:fixed;background:var(--text);color:var(--panel);
+  padding:6px 11px;border-radius:8px;font-size:11px;font-weight:600;line-height:1.5;
+  pointer-events:none;z-index:200;opacity:0;transition:opacity .1s;
+  white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.18);
+}
+#tl-tooltip.show{opacity:1;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HEADER -->
+  <div id="header">
+    <div class="hdr-row">
+      <div>
+        <div class="hdr-title">Fluid &amp; Void</div>
+      </div>
+      <div class="hdr-controls">
+        <button id="dark-toggle" onclick="toggleDark()" title="Toggle dark mode">☀️</button>
+        <button class="hdr-btn" onclick="exportCSV()">CSV ↓</button>
+        <button class="hdr-btn" onclick="exportReport()">Report ↓</button>
+        <button class="hdr-btn" onclick="openSetup()">⚙</button>
+      </div>
+    </div>
+
+    <div class="today-strip">
+      <div class="today-card">
+        <div class="today-sub">Intake</div>
+        <div class="today-val" style="color:var(--water)" id="hdr-intake">0.0 oz</div>
+        <div style="font-size:9px;color:var(--muted);margin-top:1px" id="hdr-intake-sub">of 83 oz</div>
+      </div>
+      <div class="today-card">
+        <div class="today-sub">Voids</div>
+        <div class="today-val" style="color:var(--void)" id="hdr-voids">0</div>
+        <div style="font-size:9px;color:var(--muted);margin-top:1px">today</div>
+      </div>
+      <div class="today-card">
+        <div class="today-sub">Drinks</div>
+        <div class="today-val" style="color:var(--green)" id="hdr-drinks">0</div>
+        <div style="font-size:9px;color:var(--muted);margin-top:1px">today</div>
+      </div>
+    </div>
+
+    <div class="goal-bar-wrap">
+      <div class="goal-bar-row">
+        <span style="color:var(--muted)">Daily goal</span>
+        <span id="goal-label" style="color:var(--muted)">0 / 83 oz</span>
+      </div>
+      <div class="goal-bar-bg"><div class="goal-bar-fill" id="goal-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- SYNC BAR -->
+  <div id="sync-bar">
+    <div id="sync-dot" class="offline"></div>
+    <div id="sync-text">Sheets not configured</div>
+    <button id="sync-btn" onclick="manualSync()">Sync</button>
+  </div>
+
+  <!-- TABS -->
+  <div id="tabs">
+    <button class="tab-btn active" onclick="switchTab('log')">Log</button>
+    <button class="tab-btn" onclick="switchTab('timeline')">Timeline</button>
+    <button class="tab-btn" onclick="switchTab('charts')">Charts</button>
+    <button class="tab-btn" onclick="switchTab('stats')">Stats</button>
+    <button class="tab-btn" onclick="switchTab('history')">History</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content">
+
+    <!-- LOG TAB -->
+    <div class="tab-panel active" id="tab-log">
+
+      <!-- QUICK LOG -->
+      <div class="panel">
+        <div class="section-head">Quick log</div>
+        <div class="quick-grid">
+          <button class="quick-btn water" onclick="quickLog(0,16)">
+            <span class="quick-emoji">💧</span>
+            <span class="quick-label">Water</span>
+            <span class="quick-sub">16 oz</span>
+          </button>
+          <button class="quick-btn spark" onclick="quickLog(1,12)">
+            <span class="quick-emoji">🫧</span>
+            <span class="quick-label">Sparkling</span>
+            <span class="quick-sub">12 oz</span>
+          </button>
+          <button class="quick-btn coffee" onclick="quickLog(2,8)">
+            <span class="quick-emoji">☕</span>
+            <span class="quick-label">Coffee</span>
+            <span class="quick-sub">8 oz</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- DRINK FORM -->
+      <div class="panel">
+        <div class="section-head">Log a drink</div>
+        <div class="label">Type</div>
+        <div class="chips" id="drink-type-chips"></div>
+        <div class="label">Amount (oz)</div>
+        <div class="chips" id="drink-amt-chips">
+          <input class="inp inp-sm" type="number" placeholder="oz" id="custom-oz" oninput="setCustomOz(this.value)">
+        </div>
+        <div class="label">Notes</div>
+        <input class="inp mb10" type="text" id="drink-notes" placeholder="e.g. with meal, post-workout…">
+        <div class="label">Date &amp; Time</div>
+        <div class="time-row" onclick="openTimePicker('drink-time')">
+          <span class="time-row-val" id="drink-time-display"></span>
+          <button class="time-row-btn" tabindex="-1">Change</button>
+        </div>
+        <input class="time-inp-hidden" type="datetime-local" id="drink-time" oninput="updateTimeDisplay('drink-time')">
+        <button class="btn-log" id="drink-log-btn" onclick="logDrink()">Log 8 oz Water</button>
+      </div>
+
+      <!-- VOID FORM -->
+      <div class="panel alt">
+        <div class="section-head">Log a void</div>
+        <div class="label">Notes</div>
+        <input class="inp mb10" type="text" id="void-notes" placeholder="e.g. urgency 3/5, pale yellow…">
+        <div class="label">Date &amp; Time</div>
+        <div class="time-row" onclick="openTimePicker('void-time')">
+          <span class="time-row-val" id="void-time-display"></span>
+          <button class="time-row-btn" tabindex="-1">Change</button>
+        </div>
+        <input class="time-inp-hidden" type="datetime-local" id="void-time" oninput="updateTimeDisplay('void-time')">
+        <button class="btn-void" onclick="logVoid()">🚽&nbsp; Log void</button>
+      </div>
+    </div>
+
+    <!-- TIMELINE TAB -->
+    <div class="tab-panel" id="tab-timeline">
+      <div class="panel">
+        <div class="section-head">Daily timeline</div>
+        <div class="tl-legend" id="tl-legend"></div>
+        <div class="tl-axis-row">
+          <div class="tl-axis-labels">
+            <span>7a</span><span>10a</span><span>1p</span><span>4p</span><span>7p</span><span>11p</span>
+          </div>
+        </div>
+        <div id="tl-container"></div>
+        <div style="margin-top:10px;font-size:10px;font-weight:600;color:var(--muted)">Circle size = oz consumed &nbsp;·&nbsp; Purple ticks = voids</div>
+      </div>
+    </div>
+
+    <!-- CHARTS TAB -->
+    <div class="tab-panel" id="tab-charts">
+      <div class="panel">
+        <div class="section-head">Daily voids</div>
+        <div class="barchart" id="bc-voids"></div>
+      </div>
+      <div class="panel">
+        <div class="section-head">Daily intake (oz)</div>
+        <div class="barchart" id="bc-intake"></div>
+        <div style="font-size:10px;font-weight:600;color:var(--muted);margin-top:4px;display:flex;gap:14px">
+          <span style="color:var(--green)">● ≥83 oz</span>
+          <span style="color:var(--amber)">● 50–82 oz</span>
+          <span style="color:var(--red)">● &lt;50 oz</span>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-head">Void gap over time</div>
+        <div style="font-size:10px;font-weight:500;color:var(--muted);margin-bottom:10px">Minutes between each void</div>
+        <svg id="sparkline-svg" viewBox="0 0 320 90" style="width:100%;height:90px"></svg>
+        <div style="display:flex;justify-content:space-between;margin-top:2px">
+          <span style="font-size:9px;font-weight:600;color:var(--muted)">earliest</span>
+          <span style="font-size:9px;font-weight:600;color:var(--muted)">latest</span>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-head">Drink volume vs. void gap</div>
+        <div style="font-size:10px;font-weight:500;color:var(--muted);margin-bottom:10px">Each dot = one void interval. X = oz consumed, Y = gap in minutes.</div>
+        <svg id="scatter-svg" viewBox="0 0 280 120" style="width:100%;height:120px"></svg>
+        <div id="scatter-empty" class="empty" style="padding-top:10px;display:none;font-size:11px">Need more data.</div>
+      </div>
+    </div>
+
+    <!-- STATS TAB -->
+    <div class="tab-panel" id="tab-stats">
+      <div class="panel">
+        <div class="section-head">Void intervals</div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-lbl">Avg gap (daytime)</div>
+            <div class="stat-val" style="color:var(--void)" id="stat-avg">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-lbl">Avg voids / day</div>
+            <div class="stat-val" style="color:var(--void)" id="stat-total">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-lbl">Longest daytime gap</div>
+            <div class="stat-val" style="color:var(--amber)" id="stat-max">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-lbl">Oz per void (est.)</div>
+            <div class="stat-val" style="color:var(--green)" id="stat-ozpervoid">—</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font-size:11px;font-weight:500;color:var(--muted);line-height:1.9">
+          <div id="stat-max-when"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-head">Last 7 days</div>
+        <div id="daily-breakdown"></div>
+      </div>
+      <div class="panel">
+        <div class="section-head">Correlation insight</div>
+        <div id="correlation-insight" style="font-size:12px;font-weight:500;color:var(--textdim);line-height:1.8"></div>
+      </div>
+    </div>
+
+    <!-- HISTORY TAB -->
+    <div class="tab-panel" id="tab-history">
+      <div class="flex-row" style="margin-bottom:12px">
+        <div style="font-size:11px;font-weight:600;color:var(--muted)">All events, newest first</div>
+        <div style="font-size:11px;font-weight:600;color:var(--muted)" id="hist-count">0 entries</div>
+      </div>
+      <div id="history-list"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FLASH -->
+<div id="flash"></div>
+
+<!-- EDIT MODAL -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal-box">
+    <div id="modal-title" style="font-family:var(--serif);font-size:19px;font-weight:400;margin-bottom:18px"></div>
+    <div id="modal-drink-fields">
+      <div class="label">Drink type</div>
+      <div class="chips" id="modal-type-chips"></div>
+      <div class="label">Amount (oz)</div>
+      <div class="chips mb14" id="modal-amt-chips">
+        <input class="inp inp-sm" type="number" id="modal-custom-oz" oninput="modalSetCustomOz(this.value)">
+      </div>
+    </div>
+    <div class="label">Time</div>
+    <div class="time-row mb14" onclick="openTimePicker('modal-time')">
+      <span class="time-row-val" id="modal-time-display"></span>
+      <button class="time-row-btn" tabindex="-1">Change</button>
+    </div>
+    <input class="time-inp-hidden" type="datetime-local" id="modal-time" oninput="updateTimeDisplay('modal-time')">
+    <div class="label">Notes</div>
+    <textarea class="inp mb14" id="modal-notes" rows="3" style="min-height:72px"></textarea>
+    <div style="display:flex;gap:10px">
+      <button onclick="closeModal()" style="flex:1;padding:13px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--textdim);cursor:pointer;font-size:13px;font-weight:600;font-family:var(--sans)">Cancel</button>
+      <button id="modal-save-btn" onclick="saveEdit()" style="flex:2;padding:13px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:700;font-family:var(--sans)">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- SETUP MODAL -->
+<div id="setup-overlay">
+  <div id="setup-box">
+    <h2>Google Sheets sync</h2>
+    <p>Sync to a Google Sheet via a free Apps Script web app. One-time setup, ~3 minutes.</p>
+    <ol>
+      <li>Open Google Sheets → create a new spreadsheet</li>
+      <li>Go to <strong>Extensions → Apps Script</strong></li>
+      <li>Delete placeholder code and paste the script below</li>
+      <li>Click <strong>Deploy → New deployment → Web app</strong></li>
+      <li>Set <em>Execute as</em>: <code>Me</code> and <em>Who has access</em>: <code>Anyone</code></li>
+      <li>Authorize, copy the Web App URL, paste it below</li>
+    </ol>
+    <div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:14px;border:1px solid var(--border)">
+      <div class="label" style="margin-bottom:8px">Apps Script — copy this</div>
+      <pre id="script-code" style="font-size:10px;color:var(--textdim);white-space:pre-wrap;line-height:1.6;max-height:140px;overflow-y:auto"></pre>
+      <button onclick="copyScript()" style="margin-top:10px;background:var(--panel);border:1.5px solid var(--border);border-radius:7px;padding:6px 14px;color:var(--textdim);cursor:pointer;font-size:11px;font-weight:700;font-family:var(--sans)">Copy script</button>
+    </div>
+    <div class="label">Web App URL</div>
+    <input class="inp mb10" type="url" id="setup-url" placeholder="https://script.google.com/macros/s/…/exec">
+    <div style="display:flex;gap:10px;margin-top:6px">
+      <button onclick="closeSetup()" style="flex:1;padding:11px;border-radius:9px;border:1.5px solid var(--border);background:transparent;color:var(--textdim);cursor:pointer;font-size:13px;font-weight:600;font-family:var(--sans)">Cancel</button>
+      <button onclick="testAndSaveUrl()" style="flex:2;padding:11px;border-radius:9px;border:none;background:var(--green);color:#fff;cursor:pointer;font-size:13px;font-weight:700;font-family:var(--sans)">Test &amp; Save</button>
+    </div>
+    <div id="setup-status" style="margin-top:10px;font-size:11px;font-weight:500;color:var(--muted);text-align:center"></div>
+  </div>
+</div>
+
+<!-- TIMELINE TOOLTIP -->
+<div id="tl-tooltip"></div>
+
+<script>
+// ── constants ─────────────────────────────────────────────────────────────────
+const GOAL_OZ=83,STORAGE_KEY='fvt-v3',QUEUE_KEY='fvt-queue',URL_KEY='fvt-script-url',DARK_KEY='fvt-dark';
+
+const DRINK_TYPES=[
+  {label:'Water',          emoji:'💧',color:'#1a6fb5',bg:'#e6f0fa',bgd:'#0e2a44',border:'#90bce0',borderd:'#1a4070'},
+  {label:'Sparkling Water',emoji:'🫧',color:'#cc2200',bg:'#fdecea',bgd:'#3a1008',border:'#f0a090',borderd:'#801808'},
+  {label:'Coffee',         emoji:'☕',color:'#6b3a1f',bg:'#f5ece5',bgd:'#2e1a0a',border:'#c8a080',borderd:'#4a2810'},
+  {label:'Tea',            emoji:'🍵',color:'#3a7a30',bg:'#eaf2e4',bgd:'#1a2e10',border:'#90c080',borderd:'#284818'},
+  {label:'Juice',          emoji:'🧃',color:'#c05800',bg:'#fef0e0',bgd:'#3a1a00',border:'#f0b060',borderd:'#803000'},
+  {label:'Soda',           emoji:'🥤',color:'#8a3a68',bg:'#f4e8f0',bgd:'#38182a',border:'#d0a0c0',borderd:'#501830'},
+  {label:'Alcohol',        emoji:'🍺',color:'#7a5a10',bg:'#f2ecd8',bgd:'#302410',border:'#c8b060',borderd:'#4a3408'},
+  {label:'Other',          emoji:'🫗',color:'#505090',bg:'#eeeef6',bgd:'#20202e',border:'#b0b0d8',borderd:'#303048'},
+];
+
+const APPS_SCRIPT=`function doPost(e) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const data = JSON.parse(e.postData.contents);
+  const action = data.action;
+  if (action === 'append') {
+    const rows = data.rows || [];
+    rows.forEach(row => {
+      const sheetName = row.kind === 'drink' ? 'Drinks' : 'Voids';
+      let sheet = ss.getSheetByName(sheetName);
+      if (!sheet) {
+        sheet = ss.insertSheet(sheetName);
+        const headers = row.kind === 'drink'
+          ? ['ID','Timestamp','Type','Amount_oz','Notes','Logged_at']
+          : ['ID','Timestamp','Notes','Logged_at'];
+        sheet.appendRow(headers);
+        sheet.getRange(1,1,1,headers.length).setFontWeight('bold');
+      }
+      if (row.kind === 'drink') {
+        sheet.appendRow([row.id, row.time_iso, row.drink_type, row.amount, row.notes || '', new Date().toISOString()]);
+      } else {
+        sheet.appendRow([row.id, row.time_iso, row.notes || '', new Date().toISOString()]);
+      }
+    });
+    return response({ok: true, written: rows.length});
+  }
+  if (action === 'delete') {
+    ['Drinks','Voids'].forEach(name => {
+      const sheet = ss.getSheetByName(name);
+      if (!sheet) return;
+      const vals = sheet.getDataRange().getValues();
+      for (let i = vals.length - 1; i >= 1; i--) {
+        if (String(vals[i][0]) === String(data.id)) sheet.deleteRow(i + 1);
+      }
+    });
+    return response({ok: true});
+  }
+  if (action === 'ping') return response({ok: true, msg: 'pong'});
+  return response({ok: false, msg: 'Unknown action'});
+}
+function response(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}`;
+
+// ── helpers ───────────────────────────────────────────────────────────────────
+const toLocalISO=ts=>{const d=new Date(ts),p=n=>String(n).padStart(2,'0');return`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;};
+const fmtDt=ts=>new Date(ts).toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+const fmtDate=ts=>new Date(ts).toLocaleDateString([],{month:'short',day:'numeric'});
+const fmtDur=ms=>{if(!ms||ms<0)return'—';const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);return h>0?`${h}h ${m}m`:`${m}m`;};
+const isDark=()=>document.documentElement.classList.contains('dark');
+
+// ── data ──────────────────────────────────────────────────────────────────────
+let DB={drinks:[],voids:[]};
+try{const s=localStorage.getItem(STORAGE_KEY);if(s)DB=JSON.parse(s);}catch{}
+let syncQueue=[];
+try{const q=localStorage.getItem(QUEUE_KEY);if(q)syncQueue=JSON.parse(q);}catch{}
+let scriptUrl=localStorage.getItem(URL_KEY)||'';
+const save=()=>{try{localStorage.setItem(STORAGE_KEY,JSON.stringify(DB));}catch{}};
+const saveQueue=()=>{try{localStorage.setItem(QUEUE_KEY,JSON.stringify(syncQueue));}catch{}};
+
+let selDrinkType=0,selDrinkAmt=8,editingItem=null,modalSelType=0,modalSelAmt=8,isSyncing=false;
+
+// ── dark mode ─────────────────────────────────────────────────────────────────
+function toggleDark(){
+  const on=document.documentElement.classList.toggle('dark');
+  document.getElementById('dark-toggle').textContent=on?'🌙':'☀️';
+  localStorage.setItem(DARK_KEY,on?'1':'0');
+  // update meta for status bar
+  document.querySelector('meta[name=apple-mobile-web-app-status-bar-style]').content=on?'black-translucent':'default';
+}
+function initDark(){
+  const saved=localStorage.getItem(DARK_KEY);
+  if(saved==='1'){document.documentElement.classList.add('dark');document.getElementById('dark-toggle').textContent='🌙';}
+}
+
+// ── sync ──────────────────────────────────────────────────────────────────────
+function setSyncStatus(state,msg){document.getElementById('sync-dot').className=state;document.getElementById('sync-text').textContent=msg;}
+function updateSyncBar(){
+  const p=syncQueue.length;
+  if(!scriptUrl){setSyncStatus('offline','Sheets not configured — tap ⚙ to set up');return;}
+  if(!navigator.onLine){setSyncStatus('offline',`Offline · ${p} pending`);return;}
+  if(isSyncing){setSyncStatus('syncing','Syncing…');return;}
+  setSyncStatus(p===0?'online':'offline',p===0?'Synced ✓':`${p} item${p>1?'s':''} pending sync`);
+}
+function enqueue(op){syncQueue.push(op);saveQueue();updateSyncBar();flushQueue();}
+async function gasGet(op){
+  const url=scriptUrl+'?payload='+encodeURIComponent(JSON.stringify(op));
+  const res=await fetch(url);
+  const json=await res.json();
+  if(!json.ok)throw new Error(json.msg||'Script error');
+  return json;
+}
+async function flushQueue(){
+  if(!scriptUrl||!navigator.onLine||isSyncing||syncQueue.length===0)return;
+  isSyncing=true;updateSyncBar();
+  while(syncQueue.length>0){
+    try{await gasGet(syncQueue[0]);syncQueue.shift();saveQueue();}
+    catch(e){console.warn('Sync failed:',e);break;}
+  }
+  isSyncing=false;updateSyncBar();
+}
+
+// ── tabs ──────────────────────────────────────────────────────────────────────
+function switchTab(id){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',['log','timeline','charts','stats','history'][i]===id));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+id));
+  if(id==='timeline')renderTimeline();
+  if(id==='charts')renderCharts();if(id==='stats')renderStats();if(id==='history')renderHistory();
+}
+
+// ── flash ─────────────────────────────────────────────────────────────────────
+let flashTimer;
+function showFlash(msg){
+  const el=document.getElementById('flash');el.textContent=msg;el.style.display='block';
+  clearTimeout(flashTimer);flashTimer=setTimeout(()=>el.style.display='none',2000);
+}
+
+// ── chip colors ───────────────────────────────────────────────────────────────
+function applyChipStyle(btn,dt,active){
+  if(active){
+    btn.style.background=isDark()?dt.bgd:dt.bg;
+    btn.style.borderColor=isDark()?dt.borderd:dt.border;
+    btn.style.color=dt.color;
+  }else{
+    btn.style.background='';btn.style.borderColor='';btn.style.color='';
+  }
+}
+
+// ── drink chips ───────────────────────────────────────────────────────────────
+function renderDrinkChips(){
+  const c=document.getElementById('drink-type-chips');c.innerHTML='';
+  DRINK_TYPES.forEach((dt,i)=>{
+    const b=document.createElement('button');b.className='chip'+(i===selDrinkType?' active':'');
+    applyChipStyle(b,dt,i===selDrinkType);
+    b.textContent=dt.emoji+' '+dt.label;
+    b.onclick=()=>{selDrinkType=i;renderDrinkChips();renderAmtChips();updateLogBtn();};c.appendChild(b);
+  });
+}
+function renderAmtChips(){
+  const OZS=[4,6,8,10,12,16,20,32];
+  const c=document.getElementById('drink-amt-chips'),input=document.getElementById('custom-oz');c.innerHTML='';
+  const dt=DRINK_TYPES[selDrinkType];
+  OZS.forEach(oz=>{
+    const b=document.createElement('button');b.className='chip'+(oz===selDrinkAmt?' active':'');
+    applyChipStyle(b,dt,oz===selDrinkAmt);
+    b.textContent=oz;b.onclick=()=>{selDrinkAmt=oz;document.getElementById('custom-oz').value='';renderAmtChips();updateLogBtn();};c.appendChild(b);
+  });
+  c.appendChild(input);
+}
+function setCustomOz(v){const n=parseFloat(v);if(n>0){selDrinkAmt=n;renderAmtChips();updateLogBtn();}}
+function updateLogBtn(){
+  const dt=DRINK_TYPES[selDrinkType],btn=document.getElementById('drink-log-btn');
+  btn.textContent=`${dt.emoji} Log ${selDrinkAmt} oz ${dt.label}`;
+  btn.style.background=isDark()?dt.bgd:dt.bg;
+  btn.style.color=dt.color;
+  btn.style.border=`1.5px solid ${isDark()?dt.borderd:dt.border}`;
+}
+
+// ── quick log ─────────────────────────────────────────────────────────────────
+function quickLog(typeIdx,amount){
+  const entry={id:Date.now(),time:Date.now(),type:typeIdx,amount,notes:''};
+  DB.drinks.push(entry);save();
+  showFlash(`+${amount} oz ${DRINK_TYPES[typeIdx].label}`);
+  renderHeader();
+  enqueue({action:'append',rows:[{kind:'drink',id:entry.id,time_iso:new Date(entry.time).toISOString(),drink_type:DRINK_TYPES[typeIdx].label,amount,notes:''}]});
+}
+
+// ── modal chips ───────────────────────────────────────────────────────────────
+function renderModalTypeChips(){
+  const c=document.getElementById('modal-type-chips');c.innerHTML='';
+  DRINK_TYPES.forEach((dt,i)=>{
+    const b=document.createElement('button');b.className='chip'+(i===modalSelType?' active':'');
+    applyChipStyle(b,dt,i===modalSelType);
+    b.textContent=dt.emoji+' '+dt.label;b.onclick=()=>{modalSelType=i;renderModalTypeChips();renderModalAmtChips();};c.appendChild(b);
+  });
+}
+function renderModalAmtChips(){
+  const OZS=[4,6,8,10,12,16,20,32];
+  const c=document.getElementById('modal-amt-chips'),input=document.getElementById('modal-custom-oz');c.innerHTML='';
+  const dt=DRINK_TYPES[modalSelType];
+  OZS.forEach(oz=>{
+    const b=document.createElement('button');b.className='chip'+(oz===modalSelAmt?' active':'');
+    applyChipStyle(b,dt,oz===modalSelAmt);
+    b.textContent=oz;b.onclick=()=>{modalSelAmt=oz;document.getElementById('modal-custom-oz').value='';renderModalAmtChips();};c.appendChild(b);
+  });
+  c.appendChild(input);
+}
+function modalSetCustomOz(v){const n=parseFloat(v);if(n>0){modalSelAmt=n;renderModalAmtChips();}}
+
+// ── log ───────────────────────────────────────────────────────────────────────
+function logDrink(){
+  const t=document.getElementById('drink-time').value;
+  const time=t?new Date(t).getTime():Date.now();
+  const notes=document.getElementById('drink-notes').value.trim();
+  const entry={id:Date.now(),time,type:selDrinkType,amount:selDrinkAmt,notes};
+  DB.drinks.push(entry);save();
+  document.getElementById('drink-notes').value='';
+  const nowStr=toLocalISO(Date.now());
+  document.getElementById('drink-time').value=nowStr;updateTimeDisplay('drink-time');
+  showFlash(`+${selDrinkAmt} oz ${DRINK_TYPES[selDrinkType].label} logged`);
+  renderHeader();
+  enqueue({action:'append',rows:[{kind:'drink',id:entry.id,time_iso:new Date(entry.time).toISOString(),drink_type:DRINK_TYPES[entry.type].label,amount:entry.amount,notes:entry.notes}]});
+}
+function logVoid(){
+  const t=document.getElementById('void-time').value;
+  const time=t?new Date(t).getTime():Date.now();
+  const notes=document.getElementById('void-notes').value.trim();
+  const entry={id:Date.now(),time,notes};
+  DB.voids.push(entry);save();
+  document.getElementById('void-notes').value='';
+  const nowStr=toLocalISO(Date.now());
+  document.getElementById('void-time').value=nowStr;updateTimeDisplay('void-time');
+  showFlash('Void logged');renderHeader();
+  enqueue({action:'append',rows:[{kind:'void',id:entry.id,time_iso:new Date(entry.time).toISOString(),notes:entry.notes}]});
+}
+function deleteItem(kind,id){
+  DB[kind]=DB[kind].filter(x=>x.id!==id);save();renderHistory();renderHeader();
+  enqueue({action:'delete',id:String(id)});
+}
+
+// ── edit modal ────────────────────────────────────────────────────────────────
+function openEdit(kind,id){
+  const arr=kind==='voids'?DB.voids:DB.drinks;
+  const item=arr.find(x=>x.id===id);if(!item)return;
+  editingItem={...item,kind:kind==='voids'?'void':'drink'};
+  const isVoid=editingItem.kind==='void';
+  document.getElementById('modal-title').textContent='Edit '+(isVoid?'void':'drink');
+  document.getElementById('modal-drink-fields').style.display=isVoid?'none':'block';
+  document.getElementById('modal-time').value=toLocalISO(item.time);
+  updateTimeDisplay('modal-time');
+  document.getElementById('modal-notes').value=item.notes||'';
+  const sb=document.getElementById('modal-save-btn');
+  const dt=isVoid?null:DRINK_TYPES[item.type||0];
+  sb.style.background=isVoid?'var(--void-dim)':isDark()?dt.bgd:dt.bg;
+  sb.style.color=isVoid?'var(--void)':dt.color;
+  sb.style.border=isVoid?'1.5px solid var(--void-chip)':`1.5px solid ${isDark()?dt.borderd:dt.border}`;
+  if(!isVoid){modalSelType=item.type||0;modalSelAmt=item.amount||8;renderModalTypeChips();renderModalAmtChips();}
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modal-overlay'))return;
+  document.getElementById('modal-overlay').classList.remove('open');editingItem=null;
+}
+function saveEdit(){
+  if(!editingItem)return;
+  const time=new Date(document.getElementById('modal-time').value).getTime();
+  const notes=document.getElementById('modal-notes').value.trim();
+  if(editingItem.kind==='void'){DB.voids=DB.voids.map(v=>v.id===editingItem.id?{...v,time,notes}:v);}
+  else{DB.drinks=DB.drinks.map(d=>d.id===editingItem.id?{...d,time,amount:modalSelAmt,type:modalSelType,notes}:d);}
+  save();document.getElementById('modal-overlay').classList.remove('open');
+  const eid=editingItem.id,ekind=editingItem.kind;editingItem=null;
+  showFlash('Saved');renderHeader();renderHistory();
+  enqueue({action:'delete',id:String(eid)});
+  if(ekind==='void'){enqueue({action:'append',rows:[{kind:'void',id:eid,time_iso:new Date(time).toISOString(),notes}]});}
+  else{enqueue({action:'append',rows:[{kind:'drink',id:eid,time_iso:new Date(time).toISOString(),drink_type:DRINK_TYPES[modalSelType].label,amount:modalSelAmt,notes}]});}
+}
+
+// ── setup ─────────────────────────────────────────────────────────────────────
+function openSetup(){
+  document.getElementById('setup-url').value=scriptUrl||'';
+  document.getElementById('setup-status').textContent='';
+  document.getElementById('script-code').textContent=APPS_SCRIPT;
+  document.getElementById('setup-overlay').classList.add('open');
+}
+function closeSetup(){document.getElementById('setup-overlay').classList.remove('open');}
+function copyScript(){navigator.clipboard.writeText(APPS_SCRIPT).then(()=>showFlash('Script copied')).catch(()=>showFlash('Select manually'));}
+async function testAndSaveUrl(){
+  const url=document.getElementById('setup-url').value.trim();
+  const status=document.getElementById('setup-status');
+  if(!url){status.textContent='Paste your Web App URL above.';status.style.color='var(--amber)';return;}
+  status.textContent='Testing…';status.style.color='var(--muted)';
+  try{
+    const res=await fetch(url+'?payload='+encodeURIComponent(JSON.stringify({action:'ping'})));
+    const json=await res.json();
+    if(!json.ok)throw new Error('bad response');
+    scriptUrl=url;localStorage.setItem(URL_KEY,url);
+    status.textContent='Connected ✓ Syncing pending items…';status.style.color='var(--green)';
+    updateSyncBar();flushQueue();setTimeout(closeSetup,1800);
+  }catch(err){status.textContent='Could not reach URL — check it and try again.';status.style.color='var(--red)';}
+}
+function manualSync(){if(!scriptUrl){openSetup();return;}flushQueue();}
+
+// ── time helpers ──────────────────────────────────────────────────────────────
+function fmtLocalISO(isoStr){
+  if(!isoStr)return'—';
+  return new Date(isoStr).toLocaleString([],{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+function updateTimeDisplay(inputId){
+  const val=document.getElementById(inputId).value;
+  const el=document.getElementById(inputId+'-display');
+  if(el)el.textContent=fmtLocalISO(val);
+}
+function openTimePicker(inputId){
+  const inp=document.getElementById(inputId);
+  inp.style.position='fixed';inp.style.top='50%';inp.style.left='50%';
+  inp.style.opacity='0';inp.style.width='1px';inp.style.height='1px';inp.style.pointerEvents='auto';
+  inp.showPicker?inp.showPicker():inp.click();
+  setTimeout(()=>{inp.style.position='absolute';inp.style.pointerEvents='none';inp.style.width='0';inp.style.height='0';},300);
+}
+
+// ── header ────────────────────────────────────────────────────────────────────
+function renderHeader(){
+  const today=new Date().toDateString();
+  const tv=DB.voids.filter(v=>new Date(v.time).toDateString()===today);
+  const td=DB.drinks.filter(d=>new Date(d.time).toDateString()===today);
+  const vol=td.reduce((s,d)=>s+d.amount,0);
+  document.getElementById('hdr-intake').textContent=vol.toFixed(1)+' oz';
+  document.getElementById('hdr-voids').textContent=tv.length;
+  document.getElementById('hdr-drinks').textContent=td.length;
+  const pct=Math.min(vol/GOAL_OZ,1);
+  const color=pct>=1?'var(--green)':pct>=0.6?'var(--amber)':'var(--red)';
+  document.getElementById('goal-fill').style.width=(pct*100)+'%';
+  document.getElementById('goal-fill').style.background=color;
+  document.getElementById('goal-label').style.color=color;
+  document.getElementById('goal-label').textContent=pct>=1?'Goal met ✓':`${vol.toFixed(1)} / ${GOAL_OZ} oz · ${Math.round(pct*100)}%`;
+}
+
+// ── timeline ──────────────────────────────────────────────────────────────────
+const TL_WIN_START=7*3600000;   // 7am
+const TL_WIN_END=23*3600000;    // 11pm
+const TL_WIN_DUR=TL_WIN_END-TL_WIN_START;
+
+function tlPct(ts,dayBase){
+  const ms=ts-dayBase;
+  return Math.max(0,Math.min(1,(ms-TL_WIN_START)/TL_WIN_DUR));
+}
+
+const tlTip=document.getElementById('tl-tooltip');
+let tlTipTimer;
+function tlShowTip(e,text){
+  tlTip.innerHTML=text;tlTip.classList.add('show');tlMoveTip(e);
+}
+function tlMoveTip(e){
+  const x=e.clientX??e.touches?.[0]?.clientX??0;
+  const y=e.clientY??e.touches?.[0]?.clientY??0;
+  tlTip.style.left=(x+12)+'px';tlTip.style.top=(y-40)+'px';
+}
+function tlHideTip(){tlTip.classList.remove('show');}
+document.addEventListener('mousemove',e=>{if(tlTip.classList.contains('show'))tlMoveTip(e);});
+
+function renderTimeline(){
+  const container=document.getElementById('tl-container');
+  container.innerHTML='';
+
+  // Group events by day
+  const byDay={};
+  DB.drinks.forEach(d=>{
+    const k=new Date(d.time).toDateString();
+    if(!byDay[k])byDay[k]={date:new Date(k).getTime(),drinks:[],voids:[]};
+    byDay[k].drinks.push(d);
+  });
+  DB.voids.forEach(v=>{
+    const k=new Date(v.time).toDateString();
+    if(!byDay[k])byDay[k]={date:new Date(k).getTime(),drinks:[],voids:[]};
+    byDay[k].voids.push(v);
+  });
+
+  const days=Object.values(byDay).sort((a,b)=>b.date-a.date).slice(0,14);
+
+  if(!days.length){
+    container.innerHTML='<div class="empty">Nothing logged yet.</div>';
+    return;
+  }
+
+  // Build legend from drink types actually used
+  const usedTypes=new Set(DB.drinks.map(d=>d.type));
+  const legend=document.getElementById('tl-legend');
+  legend.innerHTML='';
+  usedTypes.forEach(ti=>{
+    const dt=DRINK_TYPES[ti];if(!dt)return;
+    const el=document.createElement('div');el.className='tl-leg';
+    el.innerHTML=`<div class="tl-leg-dot" style="background:${dt.color}"></div>${dt.label}`;
+    legend.appendChild(el);
+  });
+  const vlegEl=document.createElement('div');vlegEl.className='tl-leg';
+  vlegEl.innerHTML=`<div class="tl-leg-tick" style="background:var(--void)"></div>Void`;
+  legend.appendChild(vlegEl);
+
+  const maxOz=32,minR=5,maxR=13;
+  const voidColor=isDark()?'#9b7fa6':'#7a5c8a';
+
+  days.forEach(day=>{
+    const d=new Date(day.date);
+    const isToday=d.toDateString()===new Date().toDateString();
+    const dayName=isToday?'Today':d.toLocaleDateString([],{weekday:'short'});
+    const dateStr=d.toLocaleDateString([],{month:'short',day:'numeric'});
+
+    const row=document.createElement('div');row.className='tl-day-row';
+    const lbl=document.createElement('div');lbl.className='tl-day-label';
+    lbl.innerHTML=`<div class="tl-day-name">${dayName}</div><div class="tl-day-date">${dateStr}</div>`;
+    row.appendChild(lbl);
+
+    const track=document.createElement('div');track.className='tl-track';
+
+    // drinks (z-index 2, rendered first)
+    day.drinks.forEach(dr=>{
+      const pct=tlPct(dr.time,day.date);
+      const r=minR+((dr.amount-4)/(maxOz-4))*(maxR-minR);
+      const dt=DRINK_TYPES[dr.type];
+      const dot=document.createElement('div');dot.className='tl-drink';
+      dot.style.cssText=`left:${pct*100}%;width:${r*2}px;height:${r*2}px;background:${dt?.color||'#888'};`;
+      const tipText=`${dt?.emoji||''} ${dr.amount} oz ${dt?.label||''}<br><span style="font-weight:400;opacity:.7">${new Date(dr.time).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span>`;
+      dot.addEventListener('mouseenter',e=>tlShowTip(e,tipText));
+      dot.addEventListener('mouseleave',tlHideTip);
+      dot.addEventListener('touchstart',e=>{e.preventDefault();tlShowTip(e.touches[0],tipText);});
+      dot.addEventListener('touchend',tlHideTip);
+      track.appendChild(dot);
+    });
+
+    // voids (z-index 10, rendered on top)
+    day.voids.forEach(v=>{
+      const pct=tlPct(v.time,day.date);
+      const tick=document.createElement('div');tick.className='tl-void';
+      tick.style.cssText=`left:${pct*100}%;height:28px;background:${voidColor};opacity:.85;`;
+      const tipText=`🚽 Void<br><span style="font-weight:400;opacity:.7">${new Date(v.time).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span>`;
+      tick.addEventListener('mouseenter',e=>tlShowTip(e,tipText));
+      tick.addEventListener('mouseleave',tlHideTip);
+      tick.addEventListener('touchstart',e=>{e.preventDefault();tlShowTip(e.touches[0],tipText);});
+      tick.addEventListener('touchend',tlHideTip);
+      track.appendChild(tick);
+    });
+
+    row.appendChild(track);
+    container.appendChild(row);
+
+    // summary chips
+    const totalOz=day.drinks.reduce((s,d)=>s+d.amount,0);
+    const sumRow=document.createElement('div');sumRow.className='tl-sum-row';
+    sumRow.innerHTML=`<div class="tl-sum-chips">
+      <span class="tl-chip" style="color:var(--water)">${totalOz} oz</span>
+      <span class="tl-chip" style="color:var(--void)">${day.voids.length} void${day.voids.length!==1?'s':''}</span>
+    </div>`;
+    container.appendChild(sumRow);
+  });
+}
+
+// ── charts ────────────────────────────────────────────────────────────────────
+function renderCharts(){
+  const s=computeStats()||{};
+  if(!s.dailyData){
+    document.getElementById('bc-voids').innerHTML='<div class="empty" style="padding-top:12px;font-size:11px">Log at least 2 voids to see charts.</div>';
+    document.getElementById('bc-intake').innerHTML='';return;
+  }
+  const voidColor=isDark()?'#6b4e78':'#c4a8d4';
+  renderBarChart('bc-voids',s.dailyData.slice(-10),'voidCount',()=>voidColor,110);
+  renderBarChart('bc-intake',s.dailyData.slice(-10),'volume',b=>b.volume>=83?(isDark()?'#3d6b4a':'#7fc4a0'):b.volume>=50?(isDark()?'#6b4e1e':'#d4a870'):(isDark()?'#6b2e2e':'#d48080'),110);
+  renderSparkline(s.gapSparkline);renderScatter(s.correlations);
+}
+function renderBarChart(elId,bars,key,colorFn,height){
+  const el=document.getElementById(elId);el.innerHTML='';
+  if(!bars||!bars.length)return;
+  const maxV=Math.max(...bars.map(b=>b[key]),1);
+  bars.forEach(b=>{
+    const pct=(b[key]/maxV)*(height-24);
+    const col=document.createElement('div');col.className='bar-col';col.style.height=height+'px';
+    col.innerHTML=`<div class="bar-val">${key==='volume'?b[key].toFixed(0):b[key]}</div>`+
+      `<div class="bar-fill" style="height:${pct}px;background:${colorFn(b)}"></div>`+
+      `<div class="bar-lbl">${fmtDate(b.date||Date.now())}</div>`;
+    el.appendChild(col);
+  });
+}
+function renderSparkline(pts){
+  const svg=document.getElementById('sparkline-svg');svg.innerHTML='';
+  if(!pts||pts.length<2)return;
+  const TARGET=120; // minutes
+  const W=320,H=90,PAD_L=34,PAD_B=14,PAD_T=6;
+  const plotW=W-PAD_L-4,plotH=H-PAD_B-PAD_T;
+  const ys=pts.map(p=>p.y);
+  const maxY=Math.max(...ys,TARGET+10,1);
+  const n=pts.length;
+  const barW=Math.max(2,Math.floor((plotW/n)*0.65));
+  const gap=(plotW-barW*n)/(n+1);
+  const sx=i=>PAD_L+gap+(i*(barW+gap))+barW/2;
+  const sy=y=>PAD_T+plotH-(y/maxY)*plotH;
+  const col=isDark()?'#9b7fa6':'#7a5c8a';
+  const aboveCol=isDark()?'#a05a5a':'#c04040'; // red when over target
+  const gridCol=isDark()?'#2d3630':'#e8e4de';
+  const lblCol=isDark()?'#5a6860':'#888078';
+  const targetCol=isDark()?'#b8895a':'#c05800';
+  let inner='';
+  // y-axis gridlines + labels
+  const yTicks=[0,60,TARGET,Math.round(maxY)].filter((v,i,a)=>a.indexOf(v)===i).sort((a,b)=>a-b);
+  yTicks.forEach(t=>{
+    const yp=sy(t);
+    inner+=`<line x1="${PAD_L}" y1="${yp}" x2="${W-4}" y2="${yp}" stroke="${gridCol}" stroke-width="1" stroke-dasharray="3,3"/>`;
+    inner+=`<text x="${PAD_L-4}" y="${yp+3}" font-size="8" fill="${lblCol}" text-anchor="end">${t}m</text>`;
+  });
+  // bars
+  pts.forEach((p,i)=>{
+    const bh=Math.max(2,(p.y/maxY)*plotH);
+    const bx=sx(i)-barW/2;
+    const by=sy(p.y);
+    const overTarget=p.y>TARGET;
+    inner+=`<rect x="${bx}" y="${by}" width="${barW}" height="${bh}" rx="2" fill="${overTarget?aboveCol:col}" opacity="0.75"/>`;
+  });
+  // target line on top
+  const tyPos=sy(TARGET);
+  inner+=`<line x1="${PAD_L}" y1="${tyPos}" x2="${W-4}" y2="${tyPos}" stroke="${targetCol}" stroke-width="1.5" stroke-dasharray="5,3"/>`;
+  inner+=`<text x="${W-3}" y="${tyPos-3}" font-size="8" fill="${targetCol}" text-anchor="end" font-weight="700">2h</text>`;
+  svg.innerHTML=inner;
+}
+function renderScatter(correlations){
+  const svg=document.getElementById('scatter-svg');svg.innerHTML='';
+  const empty=document.getElementById('scatter-empty');
+  const pts=(correlations||[]).filter(c=>c.vol>0);
+  if(pts.length<2){empty.style.display='block';return;}empty.style.display='none';
+  const maxX=Math.max(...pts.map(p=>p.vol)),maxY=Math.max(...pts.map(p=>p.gap/60000));
+  const W=280,H=120,gridCol=isDark()?'#2d3630':'#ddd9d0';
+  let inner=`<line x1="28" y1="0" x2="28" y2="${H-16}" stroke="${gridCol}" stroke-width="1"/>`;
+  inner+=`<line x1="28" y1="${H-16}" x2="${W}" y2="${H-16}" stroke="${gridCol}" stroke-width="1"/>`;
+  const dotCol=isDark()?'#5a9e78':'#2e7a52';
+  pts.forEach(p=>{
+    const cx=28+(p.vol/maxX)*(W-36),cy=(H-20)-((p.gap/60000)/maxY)*(H-30);
+    inner+=`<circle cx="${cx}" cy="${cy}" r="4" fill="${dotCol}" opacity="0.7"/>`;
+  });
+  const lblCol=isDark()?'#5a6860':'#888078';
+  inner+=`<text x="28" y="${H-2}" font-size="8" fill="${lblCol}">0oz</text>`;
+  inner+=`<text x="${W-28}" y="${H-2}" font-size="8" fill="${lblCol}">${maxX}oz</text>`;
+  inner+=`<text x="0" y="12" font-size="8" fill="${lblCol}">${Math.round(maxY)}m</text>`;
+  svg.innerHTML=inner;
+}
+
+// ── stats ─────────────────────────────────────────────────────────────────────
+function renderStats(){
+  const s=computeStats();
+  if(!s){
+    ['stat-avg','stat-max','stat-total','stat-ozpervoid'].forEach(id=>document.getElementById(id).textContent='—');
+    document.getElementById('stat-max-when').textContent='';
+    document.getElementById('daily-breakdown').innerHTML='<div class="empty" style="padding-top:12px;font-size:11px">Log at least 2 voids.</div>';
+    document.getElementById('correlation-insight').innerHTML='<span style="color:var(--muted)">Need more data.</span>';return;
+  }
+  document.getElementById('stat-avg').textContent=fmtDur(s.avgGap);
+  document.getElementById('stat-max').textContent=fmtDur(s.maxGap.gap);
+  document.getElementById('stat-total').textContent=s.avgVoidsPerDay.toFixed(1)+' / day';
+  document.getElementById('stat-ozpervoid').textContent=s.avgOzPerVoid>0?s.avgOzPerVoid.toFixed(1)+' oz':'—';
+  document.getElementById('stat-max-when').textContent='Longest daytime gap ended '+fmtDt(s.maxGap.endTime);
+  const bd=document.getElementById('daily-breakdown');bd.innerHTML='';
+  s.dailyData.slice(-7).reverse().forEach(d=>{
+    const row=document.createElement('div');row.className='day-row';
+    row.innerHTML=`<div style="font-size:12px;font-weight:600;color:var(--textdim)">${fmtDate(d.date)}</div>`+
+      `<div style="display:flex;gap:16px"><span style="font-size:12px;font-weight:600;color:var(--void)">${d.voidCount} void${d.voidCount!==1?'s':''}</span><span style="font-size:12px;font-weight:600;color:var(--water)">${d.volume.toFixed(1)} oz</span></div>`;
+    bd.appendChild(row);
+  });
+  const ci=document.getElementById('correlation-insight');
+  const pairs=s.correlations.filter(c=>c.vol>0&&isDaytime(c.endTime));
+  if(pairs.length<3){ci.innerHTML='<span style="color:var(--muted)">Need at least 3 daytime paired data points.</span>';return;}
+  // Pearson-style: split by median intake in interval
+  const sorted=[...pairs].sort((a,b)=>a.vol-b.vol),half=Math.floor(sorted.length/2);
+  const lowAvg=sorted.slice(0,half).reduce((s,c)=>s+c.gap,0)/half;
+  const highAvg=sorted.slice(half).reduce((s,c)=>s+c.gap,0)/(sorted.length-half);
+  const medianVol=sorted[half].vol.toFixed(0);
+  const diff=Math.abs(((highAvg-lowAvg)/lowAvg*100)).toFixed(0);
+  // Determine direction clearly
+  let direction,color;
+  if(lowAvg>highAvg*1.1){
+    direction=`When you drink more (≥${medianVol} oz between voids), your gaps are ${diff}% shorter — more intake, more frequent urination. Expected pattern.`;
+    color='var(--green)';
+  } else if(highAvg>lowAvg*1.1){
+    direction=`Higher intake intervals show ${diff}% longer gaps — may indicate delayed response, or voids are happening before intake builds up.`;
+    color='var(--amber)';
+  } else {
+    direction=`Intake and void frequency are roughly independent in your data so far. Gap varies ${diff}% between low and high intake intervals.`;
+    color='var(--textdim)';
+  }
+  ci.innerHTML=`<div style="margin-bottom:6px;color:var(--muted)">Low intake intervals (&lt;${medianVol} oz): avg gap <span style="color:var(--void);font-weight:600">${fmtDur(lowAvg)}</span></div>`+
+    `<div style="margin-bottom:10px;color:var(--muted)">High intake intervals (≥${medianVol} oz): avg gap <span style="color:var(--void);font-weight:600">${fmtDur(highAvg)}</span></div>`+
+    `<div style="color:${color};font-weight:600;line-height:1.6">${direction}</div>`;
+}
+
+// ── history ───────────────────────────────────────────────────────────────────
+function renderHistory(){
+  const all=[...DB.drinks.map(d=>({...d,kind:'drink'})),...DB.voids.map(v=>({...v,kind:'void'}))].sort((a,b)=>b.time-a.time);
+  document.getElementById('hist-count').textContent=all.length+' entries';
+  const list=document.getElementById('history-list');list.innerHTML='';
+  if(!all.length){list.innerHTML='<div class="empty">Nothing logged yet.</div>';return;}
+  all.forEach(ev=>{
+    const isVoid=ev.kind==='void',dt=DRINK_TYPES[ev.type];
+    const item=document.createElement('div');item.className='hist-item';
+    item.innerHTML=`<div class="hist-icon">${isVoid?'🚽':dt?.emoji}</div>`+
+      `<div class="hist-meta"><div class="hist-title" style="color:${isVoid?'var(--void)':dt?.color}">${isVoid?'Void':`${ev.amount} oz ${dt?.label}`}</div>`+
+      `<div class="hist-time">${fmtDt(ev.time)}</div>${ev.notes?`<div class="hist-notes">"${ev.notes}"</div>`:''}</div>`+
+      `<div class="hist-actions"><button class="hist-btn" onclick="openEdit('${isVoid?'voids':'drinks'}',${ev.id})">Edit</button>`+
+      `<button class="hist-btn" onclick="deleteItem('${isVoid?'voids':'drinks'}',${ev.id})">✕</button></div>`;
+    list.appendChild(item);
+  });
+}
+
+// ── compute stats ─────────────────────────────────────────────────────────────
+const DAYTIME_START=7,DAYTIME_END=23; // 7am–11pm
+function isDaytime(ts){const h=new Date(ts).getHours();return h>=DAYTIME_START&&h<DAYTIME_END;}
+function computeStats(){
+  if(DB.voids.length<2)return null;
+  const sorted=[...DB.voids].sort((a,b)=>a.time-b.time),gaps=[];
+  for(let i=1;i<sorted.length;i++)gaps.push({gap:sorted[i].time-sorted[i-1].time,endTime:sorted[i].time,startTime:sorted[i-1].time});
+
+  // daytime-only gaps: both endpoints in daytime AND same calendar day
+  const sameDay=(a,b)=>new Date(a).toDateString()===new Date(b).toDateString();
+  const dayGaps=gaps.filter(g=>isDaytime(g.startTime)&&isDaytime(g.endTime)&&sameDay(g.startTime,g.endTime));
+  const avgGap=dayGaps.length?dayGaps.reduce((s,g)=>s+g.gap,0)/dayGaps.length:gaps.reduce((s,g)=>s+g.gap,0)/gaps.length;
+  const maxGap=dayGaps.length?dayGaps.reduce((a,b)=>b.gap>a.gap?b:a):gaps.reduce((a,b)=>b.gap>a.gap?b:a);
+  const minGap=dayGaps.length?dayGaps.reduce((a,b)=>b.gap<a.gap?b:a):gaps.reduce((a,b)=>b.gap<a.gap?b:a);
+
+  // daily data
+  const byDay={},drinksByDay={};
+  DB.voids.forEach(v=>{const k=new Date(v.time).toDateString();(byDay[k]=byDay[k]||[]).push(v);});
+  DB.drinks.forEach(d=>{const k=new Date(d.time).toDateString();(drinksByDay[k]=drinksByDay[k]||[]).push(d);});
+  const dailyData=Object.entries(byDay).map(([day,vs])=>{
+    const ds=drinksByDay[day]||[];
+    return{day,voidCount:vs.length,volume:ds.reduce((s,d)=>s+d.amount,0),date:new Date(day).getTime()};
+  }).sort((a,b)=>a.date-b.date);
+
+  // avg voids per day
+  const avgVoidsPerDay=dailyData.length?dailyData.reduce((s,d)=>s+d.voidCount,0)/dailyData.length:0;
+
+  // oz per void estimate: for each void, look back up to 4h for drinks, apply 80% absorption
+  const LOOKBACK=4*3600000,ABSORB=0.80;
+  const ozPerVoidEsts=DB.voids.map(v=>{
+    const prior=DB.drinks.filter(d=>d.time<=v.time&&d.time>=v.time-LOOKBACK);
+    return prior.reduce((s,d)=>s+d.amount,0)*ABSORB;
+  }).filter(x=>x>0);
+  const avgOzPerVoid=ozPerVoidEsts.length?ozPerVoidEsts.reduce((a,b)=>a+b,0)/ozPerVoidEsts.length:0;
+
+  // correlations: intake in window before each void vs gap length
+  const correlations=gaps.map(({gap,endTime,startTime})=>{
+    const vol=DB.drinks.filter(d=>d.time>=startTime&&d.time<=endTime).reduce((s,d)=>s+d.amount,0);
+    return{gap,vol,endTime,startTime};
+  });
+
+  return{avgGap,maxGap,minGap,avgVoidsPerDay,avgOzPerVoid,dailyData,correlations,gapSparkline:dayGaps.map((g,i)=>({x:i,y:g.gap/60000}))};
+}
+
+// ── exports ───────────────────────────────────────────────────────────────────
+function exportCSV(){
+  const rows=[['type','subtype','time','amount_oz','notes']];
+  [...DB.drinks.map(d=>({...d,kind:'drink'})),...DB.voids.map(v=>({...v,kind:'void'}))]
+    .sort((a,b)=>a.time-b.time)
+    .forEach(e=>rows.push([e.kind,e.kind==='drink'?DRINK_TYPES[e.type]?.label:'void',new Date(e.time).toISOString(),e.kind==='drink'?e.amount:'',(e.notes||'').replace(/,/g,';')]));
+  dl(rows.map(r=>r.join(',')).join('\n'),'text/csv',`fluid-void-${new Date().toISOString().slice(0,10)}.csv`);
+}
+function exportReport(){
+  const s=computeStats(),today=new Date().toDateString();
+  const tv=DB.voids.filter(v=>new Date(v.time).toDateString()===today);
+  const td=DB.drinks.filter(d=>new Date(d.time).toDateString()===today);
+  const vol=td.reduce((a,d)=>a+d.amount,0);
+  let lines=['FLUID & VOID SUMMARY REPORT',`Generated: ${new Date().toLocaleString()}`,'─────────────────────────────',
+    `TODAY (${today})`,`  Voids:  ${tv.length}`,`  Intake: ${vol.toFixed(1)} oz across ${td.length} drinks`,
+    `  Goal:   ${GOAL_OZ} oz (${Math.round(vol/GOAL_OZ*100)}%)`,'','ALL-TIME',
+    `  Total voids:  ${DB.voids.length}`,`  Total drinks: ${DB.drinks.length}`,
+    `  Total intake: ${DB.drinks.reduce((a,d)=>a+d.amount,0).toFixed(1)} oz`];
+  if(s){
+    lines.push('','VOID INTERVAL STATS',`  Average gap:  ${fmtDur(s.avgGap)}`,
+      `  Longest gap:  ${fmtDur(s.maxGap.gap)}  (ended ${fmtDt(s.maxGap.endTime)})`,
+      `  Shortest gap: ${fmtDur(s.minGap.gap)}  (ended ${fmtDt(s.minGap.endTime)})`,'','DAILY BREAKDOWN');
+    s.dailyData.slice(-7).forEach(d=>lines.push(`  ${fmtDate(d.date)}: ${d.voidCount} voids, ${d.volume.toFixed(1)} oz`));
+  }
+  dl(lines.join('\n'),'text/plain',`fluid-void-report-${new Date().toISOString().slice(0,10)}.txt`);
+}
+function dl(text,mime,filename){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:mime}));a.download=filename;a.click();}
+
+// ── init ──────────────────────────────────────────────────────────────────────
+(function init(){
+  initDark();
+  renderDrinkChips();renderAmtChips();updateLogBtn();
+  const now=toLocalISO(Date.now());
+  document.getElementById('drink-time').value=now;
+  document.getElementById('void-time').value=now;
+  updateTimeDisplay('drink-time');updateTimeDisplay('void-time');
+  renderHeader();renderHistory();updateSyncBar();
+  window.addEventListener('online',()=>{updateSyncBar();flushQueue();});
+  window.addEventListener('offline',()=>updateSyncBar());
+  if(syncQueue.length>0&&navigator.onLine&&scriptUrl)flushQueue();
+})();
+</script>
+</body>
+</html>
